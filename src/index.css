@@ -5,16 +5,40 @@
 	margin: 0;
 	padding: 0;
 }
-.title {
+.text {
 	font-family: 'Ysabeau Office', sans-serif;
+}
+
+.title {
+	font-weight: 600;
+	font-size: 50px;
 	color: rgba(238, 238, 238, 0.87);
-	font-weight: 700;
-	font-size: 60px;
+	text-align: left;
 }
 
 .subtitle {
-	font-family: 'Ysabeau Office', sans-serif;
-	color: rgba(238, 238, 238, 0.6);
 	font-weight: 300;
-	font-size: 40px;
+	font-size: 25px;
+	color: rgba(238, 238, 238, 0.6);
+}
+
+.dots {
+	height: 5px; /*to control the overall height*/
+	width: 200px; /*to control the overall width*/
+	margin: 50px;
+	background-image: repeating-linear-gradient(
+		to right,
+		transparent,
+		transparent 5px,
+		/*5px of transparent*/ blue 5px,
+		blue 10px
+	); /*then 5px of blue */
+	background-size: 200% 100%;
+	animation: change 3s linear infinite;
+}
+
+@keyframes change {
+	to {
+		background-position: right;
+	}
 }

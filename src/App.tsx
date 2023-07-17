@@ -2,12 +2,14 @@ import { Box, Container, CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import AppHeader from './components/AppHeader';
-import { Intro } from './components/Intro';
+import Intro from './components/Intro';
+
+import mySvg from './assets/Speedline-20s-1600px.svg';
 
 const theme = createTheme({
 	palette: {
 		primary: {
-			main: '#adb5bd',
+			main: '#111111',
 		},
 		background: {
 			default: '#111111',
@@ -38,8 +40,6 @@ function App() {
 								flexDirection: 'column',
 								alignItems: 'center',
 							}}>
-							<Intro />
-							<Intro />
 							<Intro />
 							<Intro />
 						</Box>
