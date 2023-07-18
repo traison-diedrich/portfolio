@@ -5,7 +5,11 @@ import * as React from 'react';
 import Typewriter from 'typewriter-effect';
 import profilePic from '../assets/profCutout.png';
 
-// interface IntroProps {}
+// TODO: this very quickly became spaghetti code
+// can consolidate the two button boxes together and
+// consider using styled components to preserve more
+// readable architecture ... also pretty sure using
+// typewriter as a controller for animations is not best practice
 
 const Intro: React.FC = () => {
 	const theme = useTheme();
@@ -28,43 +32,20 @@ const Intro: React.FC = () => {
 				sx={{
 					height: 7 / 11,
 					minWidth: '100%',
-				}}></Box>
-			<Box
-				sx={{
-					height: 4 / 11,
-					bgcolor: 'text.primary',
-					minWidth: '100%',
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'flex-end',
-					alignItems: 'center',
-				}}>
-				<Divider
-					textAlign='center'
-					variant='middle'
-					sx={{
-						mb: 2,
-						width: '95%',
-						zIndex: 11,
-						borderBottomWidth: '1px',
-						borderBottomColor: 'background.default',
-					}}></Divider>
-			</Box>
-			<Box
-				sx={{
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'center',
-					alignItems: 'center',
-					position: 'absolute',
-					width: matches ? '30%' : '70%',
+					alignItems: matches ? 'flex-start' : 'center',
 					zIndex: 999,
-					top: matches ? '25%' : '8%',
-					left: matches ? '7%' : '15%',
 					textAlign: matches ? 'left' : 'center',
+					pl: matches ? 10 : 5,
+					pr: matches ? '60vw' : 5,
+					pt: matches ? '10vh' : 0,
+					pb: 10,
 				}}>
 				<div className='text title'>
 					<Typewriter
+						options={{ delay: 60 }}
 						onInit={(typewriter) => {
 							typewriter
 								.pauseFor(500)
@@ -92,13 +73,12 @@ const Intro: React.FC = () => {
 					</p>
 				</Fade>
 				{!matches && (
-					<Box sx={{ display: 'flex', mt: 5 }}>
+					<Box sx={{ display: 'flex', mt: 7 }}>
 						<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
 							<Button
 								variant='contained'
+								color='secondary'
 								sx={{
-									bgcolor: 'text.primary',
-									color: 'background.default',
 									mr: 3,
 								}}>
 								about me
@@ -110,9 +90,8 @@ const Intro: React.FC = () => {
 							{...(showButtons ? { timeout: 1000 } : {})}>
 							<Button
 								variant='contained'
+								color='secondary'
 								sx={{
-									bgcolor: 'text.primary',
-									color: 'background.default',
 									mr: 3,
 								}}>
 								my work
@@ -122,53 +101,73 @@ const Intro: React.FC = () => {
 							in={showButtons}
 							style={{ transformOrigin: '0 0 0' }}
 							{...(showButtons ? { timeout: 2000 } : {})}>
-							<Button
-								variant='contained'
-								sx={{ bgcolor: 'text.primary', color: 'background.default' }}>
+							<Button variant='contained' color='secondary'>
 								Contact
 							</Button>
 						</Grow>
 					</Box>
 				)}
 			</Box>
-			{matches && (
-				<Box
+			<Box
+				sx={{
+					height: 4 / 11,
+					bgcolor: 'text.primary',
+					minWidth: '100%',
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}>
+				{matches && (
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							width: '25%',
+							mr: '55%',
+							mb: 4,
+						}}>
+						<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
+							<Button
+								variant='contained'
+								sx={{
+									mb: 3,
+									py: 1,
+								}}>
+								about me
+							</Button>
+						</Grow>
+						<Grow
+							in={showButtons}
+							style={{ transformOrigin: '0 0 0' }}
+							{...(showButtons ? { timeout: 1000 } : {})}>
+							<Button variant='contained' sx={{ mb: 3, py: 1 }}>
+								my work
+							</Button>
+						</Grow>
+						<Grow
+							in={showButtons}
+							style={{ transformOrigin: '0 0 0' }}
+							{...(showButtons ? { timeout: 2000 } : {})}>
+							<Button variant='contained' sx={{ py: 1 }}>
+								Contact
+							</Button>
+						</Grow>
+					</Box>
+				)}
+				<Divider
+					textAlign='center'
+					variant='middle'
 					sx={{
-						display: 'flex',
-						flexDirection: 'column',
+						mb: 2,
+						width: '90%',
+						zIndex: 11,
+						borderBottomWidth: '1px',
+						borderBottomColor: 'background.default',
 						position: 'absolute',
-						width: '30%',
-						left: '8%',
-						bottom: '8%',
-					}}>
-					<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
-						<Button
-							variant='contained'
-							sx={{
-								mb: 3,
-								py: 1,
-							}}>
-							about me
-						</Button>
-					</Grow>
-					<Grow
-						in={showButtons}
-						style={{ transformOrigin: '0 0 0' }}
-						{...(showButtons ? { timeout: 1000 } : {})}>
-						<Button variant='contained' sx={{ mb: 3, py: 1 }}>
-							my work
-						</Button>
-					</Grow>
-					<Grow
-						in={showButtons}
-						style={{ transformOrigin: '0 0 0' }}
-						{...(showButtons ? { timeout: 2000 } : {})}>
-						<Button variant='contained' sx={{ py: 1 }}>
-							Contact
-						</Button>
-					</Grow>
-				</Box>
-			)}
+						bottom: 5,
+					}}></Divider>
+			</Box>
 			<img
 				src={profilePic}
 				alt='Profile Picture'

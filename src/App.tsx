@@ -3,20 +3,22 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import AppHeader from './components/AppHeader';
 import Intro from './components/Intro';
-
-import mySvg from './assets/Speedline-20s-1600px.svg';
+import { Projects } from './components/Projects';
 
 const theme = createTheme({
 	palette: {
 		primary: {
 			main: '#111111',
 		},
+		secondary: {
+			main: '#eeeeee',
+		},
 		background: {
 			default: '#111111',
 			paper: '#222222',
 		},
 		text: {
-			primary: '#eeeeee',
+			primary: 'rgba(238, 238, 238, 0.87)',
 		},
 	},
 	typography: {
@@ -41,7 +43,7 @@ function App() {
 								alignItems: 'center',
 							}}>
 							<Intro />
-							<Intro />
+							<Projects />
 						</Box>
 					</Container>
 				</ThemeProvider>
