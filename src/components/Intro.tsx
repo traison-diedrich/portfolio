@@ -38,8 +38,8 @@ const Intro: React.FC = () => {
 					alignItems: matches ? 'flex-start' : 'center',
 					zIndex: 999,
 					textAlign: matches ? 'left' : 'center',
-					pl: matches ? 10 : 5,
-					pr: matches ? '60vw' : 5,
+					pl: '10vw',
+					pr: matches ? '60vw' : '10vw',
 					pt: matches ? '10vh' : 0,
 					pb: 10,
 				}}>
@@ -57,7 +57,7 @@ const Intro: React.FC = () => {
 								.callFunction(() => {
 									setShowSubtitle(true);
 								})
-								.pauseFor(1000)
+								.pauseFor(2500)
 								.callFunction(() => {
 									setShowButtons(true);
 								})
@@ -87,7 +87,7 @@ const Intro: React.FC = () => {
 						<Grow
 							in={showButtons}
 							style={{ transformOrigin: '0 0 0' }}
-							{...(showButtons ? { timeout: 1000 } : {})}>
+							{...(showButtons ? { timeout: 1500 } : {})}>
 							<Button
 								variant='contained'
 								color='secondary'
@@ -100,7 +100,7 @@ const Intro: React.FC = () => {
 						<Grow
 							in={showButtons}
 							style={{ transformOrigin: '0 0 0' }}
-							{...(showButtons ? { timeout: 2000 } : {})}>
+							{...(showButtons ? { timeout: 3000 } : {})}>
 							<Button variant='contained' color='secondary'>
 								Contact
 							</Button>
@@ -111,7 +111,7 @@ const Intro: React.FC = () => {
 			<Box
 				sx={{
 					height: 4 / 11,
-					bgcolor: 'text.primary',
+					bgcolor: 'secondary.main',
 					minWidth: '100%',
 					display: 'flex',
 					flexDirection: 'column',
@@ -126,6 +126,7 @@ const Intro: React.FC = () => {
 							width: '25%',
 							mr: '55%',
 							mb: 4,
+							zIndex: 999,
 						}}>
 						<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
 							<Button
