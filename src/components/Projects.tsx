@@ -64,7 +64,11 @@ interface CardProps {
 }
 
 const ProjectCard: React.FC<CardProps> = (props) => {
-	const [isHovered, setIsHovered] = React.useState(false);
+	const [cardHovered, setCardHovered] = React.useState(false);
+	const [imgHovered, setImgHovered] = React.useState(false);
+
+	// TODO: Card should keep track of if it is visible and slide in or out
+	// need to see how this might work with grid
 
 	return (
 		<Card
@@ -74,13 +78,14 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 				height: 420,
 				transition: 'box-shadow 0.3s',
 				'&:hover': {
-					boxShadow: isHovered
+					boxShadow: cardHovered
 						? '0px 7px 29px 0px rgba(221, 221, 221, 0.5)'
 						: 'none',
 				},
 			}}
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}>
+			onMouseEnter={() => setCardHovered(true)}
+			onMouseLeave={() => setCardHovered(false)}>
+			{/* TODO: overlay on hover */}
 			<CardMedia
 				component='a'
 				href={props.url}
@@ -89,9 +94,29 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 					height: '250px',
 					width: '100%',
 					objectFit: 'cover',
+					textDecoration: 'none',
 				}}
 				image={props.image}
-			/>
+				onMouseEnter={() => setImgHovered(true)}
+				onMouseLeave={() => setImgHovered(false)}>
+				<Box
+					sx={{
+						width: '100%',
+						height: '100%',
+						bgcolor: 'rgba(0, 0, 0, 0.3)',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						opacity: imgHovered ? 1 : 0,
+						transition: 'opacity 0.4s',
+					}}>
+					<Box sx={{ p: 1, bgcolor: 'secondary.main', borderRadius: '3px' }}>
+						<Typography color='primary' variant='subtitle1'>
+							View Project
+						</Typography>
+					</Box>
+				</Box>
+			</CardMedia>
 			<CardContent sx={{ height: 170 }}>
 				<Box
 					sx={{
@@ -114,7 +139,7 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 							))}
 						</Box>
 					</Box>
-					<Typography variant='body1' color='primary'>
+					<Typography variant='body1' color='primary' sx={{ mt: 1 }}>
 						{props.subtitle}
 					</Typography>
 				</Box>
@@ -134,7 +159,7 @@ export const Projects: React.FC = () => {
 				p: 5,
 			}}>
 			<Typography variant='h2' color='secondary' sx={{ mb: 4 }}>
-				Recent Work
+				Recent Projects
 			</Typography>
 			<Grid container spacing={3} direction='row' justifyContent='center'>
 				<Grid item>

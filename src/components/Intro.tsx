@@ -2,6 +2,7 @@ import { Box, Button, Divider, Fade, Grow } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
+import { Link } from 'react-scroll';
 import Typewriter from 'typewriter-effect';
 import profilePic from '../assets/profCutout.png';
 
@@ -84,19 +85,21 @@ const Intro: React.FC = () => {
 								about me
 							</Button>
 						</Grow>
-						<Grow
-							in={showButtons}
-							style={{ transformOrigin: '0 0 0' }}
-							{...(showButtons ? { timeout: 1500 } : {})}>
-							<Button
-								variant='contained'
-								color='secondary'
-								sx={{
-									mr: 3,
-								}}>
-								my work
-							</Button>
-						</Grow>
+						<Link to='projects' smooth={true} duration={1000}>
+							<Grow
+								in={showButtons}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(showButtons ? { timeout: 1500 } : {})}>
+								<Button
+									variant='contained'
+									color='secondary'
+									sx={{
+										mr: 3,
+									}}>
+									my work
+								</Button>
+							</Grow>
+						</Link>
 						<Grow
 							in={showButtons}
 							style={{ transformOrigin: '0 0 0' }}
@@ -138,14 +141,18 @@ const Intro: React.FC = () => {
 								about me
 							</Button>
 						</Grow>
-						<Grow
-							in={showButtons}
-							style={{ transformOrigin: '0 0 0' }}
-							{...(showButtons ? { timeout: 1000 } : {})}>
-							<Button variant='contained' sx={{ mb: 3, py: 1 }}>
-								my work
-							</Button>
-						</Grow>
+						<Link to='projects' smooth={true} duration={1000}>
+							<Grow
+								in={showButtons}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(showButtons ? { timeout: 1000 } : {})}>
+								<Button
+									variant='contained'
+									sx={{ mb: 3, py: 1, width: '100%' }}>
+									`` my work
+								</Button>
+							</Grow>
+						</Link>
 						<Grow
 							in={showButtons}
 							style={{ transformOrigin: '0 0 0' }}

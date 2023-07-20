@@ -115,8 +115,8 @@ const PythonIcon = createSvgIcon(
 				x2='79.6388325%'
 				y2='78.2008538%'
 				id='linearGradient-1'>
-				<stop stop-color='#eeeeee' offset='0%'></stop>
-				<stop stop-color='#eeeeee' offset='100%'></stop>
+				<stop stopColor='#eeeeee' offset='0%'></stop>
+				<stop stopColor='#eeeeee' offset='100%'></stop>
 			</linearGradient>
 			<linearGradient
 				x1='19.127525%'
@@ -124,8 +124,8 @@ const PythonIcon = createSvgIcon(
 				x2='90.7415328%'
 				y2='88.4290372%'
 				id='linearGradient-2'>
-				<stop stop-color='#eeeeee' offset='0%'></stop>
-				<stop stop-color='#eeeeee' offset='100%'></stop>
+				<stop stopColor='#eeeeee' offset='0%'></stop>
+				<stop stopColor='#eeeeee' offset='100%'></stop>
 			</linearGradient>
 		</defs>
 		<g>
