@@ -1,5 +1,6 @@
 import { createSvgIcon } from '@mui/material';
 
+// icons from SVGporn for future reference
 const ReactIcon = createSvgIcon(
 	<svg
 		width='256px'

@@ -6,6 +6,7 @@ import AppHeader from './components/AppHeader';
 import { Contact } from './components/Contact';
 import Intro from './components/Intro';
 import { Projects } from './components/Projects';
+import { Test } from './components/Test';
 
 const theme = createTheme({
 	palette: {
@@ -50,17 +51,10 @@ function App() {
 							<Element name='projects'>
 								<Projects />
 							</Element>
-							<Element name='contact'>
+							{/* <Element name='contact'>
 								<Contact />
-							</Element>
-							<Box
-								sx={{
-									height: '100vh',
-									minWidth: '100%',
-									bgcolor: 'secondary.main',
-								}}>
-								There is content in this box
-							</Box>
+							</Element> */}
+							<Test />
 						</Box>
 					</Container>
 				</ThemeProvider>

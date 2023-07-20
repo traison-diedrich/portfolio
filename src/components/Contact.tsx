@@ -55,7 +55,7 @@ export const Contact: React.FC = () => {
 				bgcolor: 'secondary.main',
 				p: 3,
 			}}>
-			there is conent
+			there is content
 			<Box
 				sx={{
 					minWidth: '100%',
@@ -71,14 +71,14 @@ export const Contact: React.FC = () => {
 					</Typography>
 					<ChatIcon sx={{ fontSize: '3.0rem', ml: 1, mt: 1 }} />
 				</Box>
-				{/* <Player
+				<Player
 					src={airplaneAnimation}
 					className='player'
 					loop
 					autoplay
 					speed={0.7}
 					style={{ width: '100%' }}
-				/> */}
+				/>
 			</Box>
 			<Box
 				sx={{
