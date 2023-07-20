@@ -1,8 +1,10 @@
+import { Player } from '@lottiefiles/react-lottie-player';
 import ChatIcon from '@mui/icons-material/Chat';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import { Box, TextField, Typography, useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
+import airplaneAnimation from '../assets/lotties/airplaneAnimation.json';
 
 const ContactForm: React.FC = () => {
 	return (
@@ -53,13 +55,14 @@ export const Contact: React.FC = () => {
 				bgcolor: 'secondary.main',
 				p: 3,
 			}}>
+			there is conent
 			<Box
 				sx={{
 					minWidth: '100%',
 					height: '100%',
 					display: 'flex',
 					flexDirection: 'column',
-					justifyContent: 'center',
+					justifyContent: 'space-around',
 					alignItems: 'center',
 				}}>
 				<Box display='flex' alignItems='center'>
@@ -68,6 +71,14 @@ export const Contact: React.FC = () => {
 					</Typography>
 					<ChatIcon sx={{ fontSize: '3.0rem', ml: 1, mt: 1 }} />
 				</Box>
+				{/* <Player
+					src={airplaneAnimation}
+					className='player'
+					loop
+					autoplay
+					speed={0.7}
+					style={{ width: '100%' }}
+				/> */}
 			</Box>
 			<Box
 				sx={{

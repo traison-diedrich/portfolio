@@ -53,6 +53,14 @@ function App() {
 							<Element name='contact'>
 								<Contact />
 							</Element>
+							<Box
+								sx={{
+									height: '100vh',
+									minWidth: '100%',
+									bgcolor: 'secondary.main',
+								}}>
+								There is content in this box
+							</Box>
 						</Box>
 					</Container>
 				</ThemeProvider>
