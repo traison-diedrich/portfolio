@@ -26,12 +26,13 @@ const ContactTextField: React.FC<{ title: string; multiline: boolean }> = ({
 				p: 2,
 				mb: 2,
 			}}>
+			{/* TODO: the placeholder value is still way too transparent to be legible */}
 			<TextField
 				variant='standard'
 				placeholder={title}
 				name={title}
 				multiline={multiline}
-				rows={multiline ? 2 : 0}
+				rows={multiline ? 3 : 0}
 				fullWidth
 				required
 			/>
@@ -41,11 +42,19 @@ const ContactTextField: React.FC<{ title: string; multiline: boolean }> = ({
 
 const ContactForm: React.FC = () => {
 	const [waiting, setWaiting] = React.useState(false);
+	const [message, setMessage] = React.useState('');
 
 	const form = React.useRef<HTMLFormElement | null>(null);
 
+	const successMessage =
+		"Thanks for your message! You'll be hearing back from me soon.";
+	const errorMessage =
+		'Something went wrong. Please try again or contact me elsewhere.';
+
 	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
+		setWaiting(true);
 
 		emailjs
 			.sendForm(
@@ -56,13 +65,19 @@ const ContactForm: React.FC = () => {
 			)
 			.then(
 				(result) => {
+					setMessage(successMessage);
 					console.log(result.text);
-					event.currentTarget.reset();
 				},
 				(error) => {
+					setMessage(errorMessage);
 					console.log(error);
 				}
-			);
+			)
+			.finally(() => {
+				setWaiting(false);
+			});
+
+		event.currentTarget.reset();
 	};
 
 	return (
@@ -82,14 +97,17 @@ const ContactForm: React.FC = () => {
 			<ContactTextField title='Email' multiline={false} />
 			<ContactTextField title='Message' multiline={true} />
 
-			{waiting ? (
-				<CircularProgress color='secondary' />
-			) : (
-				<Button type='submit' variant='contained' color='secondary'>
-					Submit
-				</Button>
-			)}
-			<CircularProgress color='secondary' />
+			<Typography variant='body1' color='secondary' align='center'>
+				{message}
+			</Typography>
+
+			<Button
+				type='submit'
+				variant='contained'
+				color='secondary'
+				sx={{ width: '40%', mt: message.length > 0 ? 2 : 6 }}>
+				{waiting ? <CircularProgress size={24} color='primary' /> : 'Submit'}
+			</Button>
 		</Box>
 	);
 };
