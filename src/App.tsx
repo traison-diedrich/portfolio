@@ -1,12 +1,10 @@
 import { Box, Container, CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
-import { Element } from 'react-scroll';
 import AppHeader from './components/AppHeader';
 import { Contact } from './components/Contact';
 import Intro from './components/Intro';
 import { Projects } from './components/Projects';
-import { Test } from './components/Test';
 
 const theme = createTheme({
 	palette: {
@@ -22,6 +20,7 @@ const theme = createTheme({
 		},
 		text: {
 			primary: 'rgba(238, 238, 238, 0.87)',
+			secondary: 'rgba(238, 238, 238, 0.6)',
 		},
 	},
 	typography: {
@@ -45,16 +44,9 @@ function App() {
 								flexDirection: 'column',
 								alignItems: 'center',
 							}}>
-							<Element name='home'>
-								<Intro />
-							</Element>
-							<Element name='projects'>
-								<Projects />
-							</Element>
-							{/* <Element name='contact'>
-								<Contact />
-							</Element> */}
-							<Test />
+							<Intro />
+							<Projects />
+							<Contact />
 						</Box>
 					</Container>
 				</ThemeProvider>

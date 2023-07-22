@@ -2,7 +2,6 @@ import { Box, Button, Divider, Fade, Grow } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
-import { Link } from 'react-scroll';
 import Typewriter from 'typewriter-effect';
 import profilePic from '../assets/profCutout.png';
 
@@ -11,6 +10,9 @@ import profilePic from '../assets/profCutout.png';
 // consider using styled components to preserve more
 // readable architecture ... also pretty sure using
 // typewriter as a controller for animations is not best practice
+
+// TODO: a background animation for the top black box here
+// would be eye catching
 
 const Intro: React.FC = () => {
 	const theme = useTheme();
@@ -21,10 +23,11 @@ const Intro: React.FC = () => {
 
 	return (
 		<Box
+			id='intro'
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				// this height needs to take account the app header on pageload
+				// TODO: this height needs to take account the app header on page load
 				height: '94vh',
 				minWidth: '100%',
 				position: 'relative',
@@ -85,7 +88,7 @@ const Intro: React.FC = () => {
 								about me
 							</Button>
 						</Grow>
-						<Link to='projects' smooth={true} duration={1000}>
+						<a href='#projects'>
 							<Grow
 								in={showButtons}
 								style={{ transformOrigin: '0 0 0' }}
@@ -99,15 +102,17 @@ const Intro: React.FC = () => {
 									my work
 								</Button>
 							</Grow>
-						</Link>
-						<Grow
-							in={showButtons}
-							style={{ transformOrigin: '0 0 0' }}
-							{...(showButtons ? { timeout: 3000 } : {})}>
-							<Button variant='contained' color='secondary'>
-								Contact
-							</Button>
-						</Grow>
+						</a>
+						<a href='#contact'>
+							<Grow
+								in={showButtons}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(showButtons ? { timeout: 3000 } : {})}>
+								<Button variant='contained' color='secondary'>
+									contact
+								</Button>
+							</Grow>
+						</a>
 					</Box>
 				)}
 			</Box>
@@ -141,7 +146,7 @@ const Intro: React.FC = () => {
 								about me
 							</Button>
 						</Grow>
-						<Link to='projects' smooth={true} duration={1000}>
+						<a href='#projects'>
 							<Grow
 								in={showButtons}
 								style={{ transformOrigin: '0 0 0' }}
@@ -149,18 +154,20 @@ const Intro: React.FC = () => {
 								<Button
 									variant='contained'
 									sx={{ mb: 3, py: 1, width: '100%' }}>
-									`` my work
+									my work
 								</Button>
 							</Grow>
-						</Link>
-						<Grow
-							in={showButtons}
-							style={{ transformOrigin: '0 0 0' }}
-							{...(showButtons ? { timeout: 2000 } : {})}>
-							<Button variant='contained' sx={{ py: 1 }}>
-								Contact
-							</Button>
-						</Grow>
+						</a>
+						<a href='#contact'>
+							<Grow
+								in={showButtons}
+								style={{ transformOrigin: '0 0 0' }}
+								{...(showButtons ? { timeout: 2000 } : {})}>
+								<Button variant='contained' sx={{ py: 1, width: '100%' }}>
+									Contact
+								</Button>
+							</Grow>
+						</a>
 					</Box>
 				)}
 				<Divider

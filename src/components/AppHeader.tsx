@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-scroll';
 
 import {
 	AppBar,
@@ -45,17 +44,24 @@ const AppHeader: React.FC = () => {
 							}}>
 							TRAISON DIEDRICH
 						</Typography>
-						<Box sx={{ marginLeft: 'auto', display: 'flex' }}>
-							<Link to='home' smooth={true} duration={1000} offset={-70}>
+						<Box
+							sx={{
+								marginLeft: 'auto',
+								display: 'flex',
+								maxWidth: '350px',
+								width: '100%',
+								justifyContent: 'space-around',
+							}}>
+							<a href='#intro'>
 								<Button sx={{ color: 'text.primary' }}>Home</Button>
-							</Link>
-							<Button sx={{ color: 'text.primary' }}>Info</Button>
-							<Link to='projects' smooth={true} duration={1000}>
+							</a>
+							<Button sx={{ color: 'text.primary' }}>About</Button>
+							<a href='#projects'>
 								<Button sx={{ color: 'text.primary' }}>Projects</Button>
-							</Link>
-							<Link to='contact' smooth={true} duration={1000}>
+							</a>
+							<a href='#contact'>
 								<Button sx={{ color: 'text.primary' }}>Contact</Button>
-							</Link>
+							</a>
 						</Box>
 					</Toolbar>
 				</Container>

@@ -21,3 +21,7 @@
 	font-size: 25px;
 	color: rgba(238, 238, 238, 0.6);
 }
+
+html {
+	scroll-behavior: smooth;
+}

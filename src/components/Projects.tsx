@@ -4,6 +4,7 @@ import {
 	CardContent,
 	CardMedia,
 	Grid,
+	Popover,
 	Typography,
 } from '@mui/material';
 import * as React from 'react';
@@ -13,12 +14,14 @@ import hybridImages from '../assets/hybridImages.png';
 import {
 	BootstrapIcon,
 	JavaIcon,
-	MuiIcon,
-	OpencvIcon,
-	PostgreIcon,
+	MaterialUIIcon,
+	MicronautIcon,
+	OpenCVIcon,
+	PostgreSQLIcon,
 	PythonIcon,
 	RaspberryPiIcon,
 	ReactIcon,
+	TypeScriptIcon,
 } from '../assets/icons';
 import rpi from '../assets/rpi.jpg';
 import workoutPlanner from '../assets/workoutPlanner.jpg';
@@ -26,12 +29,14 @@ import workoutPlanner from '../assets/workoutPlanner.jpg';
 const icons = {
 	BootstrapIcon,
 	JavaIcon,
-	MuiIcon,
-	OpencvIcon,
-	PostgreIcon,
+	MaterialUIIcon,
+	OpenCVIcon,
+	PostgreSQLIcon,
 	PythonIcon,
 	ReactIcon,
 	RaspberryPiIcon,
+	TypeScriptIcon,
+	MicronautIcon,
 };
 
 type IconName = keyof typeof icons;
@@ -39,19 +44,42 @@ type IconName = keyof typeof icons;
 interface DynamicIconProps {
 	name: IconName;
 }
-
 function DynamicIcon({ name }: DynamicIconProps) {
 	const Icon = icons[name];
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+
+	const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
 	return Icon ? (
-		<Icon
-			sx={{
-				fontSize: '2.8rem',
-				bgcolor: 'background.default',
-				p: 0.8,
-				mr: 1,
-				borderRadius: '25%',
-			}}
-		/>
+		<Box onMouseEnter={handleOpen} onMouseLeave={handleClose}>
+			<Icon
+				sx={{
+					fontSize: '2.8rem',
+					bgcolor: 'background.default',
+					p: 0.8,
+					borderRadius: '25%',
+				}}
+			/>
+			<Popover
+				open={open}
+				anchorEl={anchorEl}
+				onClose={handleClose}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+				transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+				sx={{ pointerEvents: 'none' }}
+				disableRestoreFocus>
+				<Typography variant='subtitle1' color='primary' sx={{ p: 1 }}>
+					{name.toString().slice(0, -4)}
+				</Typography>
+			</Popover>
+		</Box>
 	) : null;
 }
 
@@ -85,7 +113,6 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 			}}
 			onMouseEnter={() => setCardHovered(true)}
 			onMouseLeave={() => setCardHovered(false)}>
-			{/* TODO: overlay on hover */}
 			<CardMedia
 				component='a'
 				href={props.url}
@@ -93,7 +120,7 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 				sx={{
 					height: '250px',
 					width: '100%',
-					objectFit: 'cover',
+					objectFit: 'fill',
 					textDecoration: 'none',
 				}}
 				image={props.image}
@@ -133,6 +160,9 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 							sx={{
 								display: 'flex',
 								marginLeft: 'auto',
+								gap: '.5rem',
+								justifyContent: 'center',
+								alignItems: 'flex-start',
 							}}>
 							{props.icons.map((iconName, index) => (
 								<DynamicIcon key={index} name={iconName} />
@@ -148,9 +178,12 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 	);
 };
 
+// TODO: I think the background here should be a simple parallax
+// to keep things from being stale
 export const Projects: React.FC = () => {
 	return (
 		<Box
+			id='projects'
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
@@ -161,7 +194,7 @@ export const Projects: React.FC = () => {
 			<Typography variant='h2' color='secondary' sx={{ mb: 4 }}>
 				Recent Projects
 			</Typography>
-			<Grid container spacing={3} direction='row' justifyContent='center'>
+			<Grid container spacing={10} direction='row' justifyContent='center'>
 				<Grid item>
 					<ProjectCard
 						title='Workout Planner'
@@ -169,7 +202,12 @@ export const Projects: React.FC = () => {
 						image={workoutPlanner}
 						subtitle='My first application, using React and Supabase to
 						create a workout planner with user authentication'
-						icons={['ReactIcon', 'MuiIcon', 'PostgreIcon']}
+						icons={[
+							'ReactIcon',
+							'TypeScriptIcon',
+							'MaterialUIIcon',
+							'PostgreSQLIcon',
+						]}
 					/>
 				</Grid>
 				<Grid item>
@@ -178,8 +216,8 @@ export const Projects: React.FC = () => {
 						url='https://github.com/oss-slu/Pi4Micronaut'
 						image={rpi}
 						subtitle="A library integrating the Micronaut Framework, 
-							Raspberry Pi's, and hardware to create Iot Applications"
-						icons={['JavaIcon', 'RaspberryPiIcon']}
+							Raspberry Pi's, and hardware to create IOT Applications"
+						icons={['JavaIcon', 'RaspberryPiIcon', 'MicronautIcon']}
 					/>
 				</Grid>
 				<Grid item>
@@ -189,17 +227,12 @@ export const Projects: React.FC = () => {
 						image={checkin}
 						subtitle='The first ever implementation of Pi4Micronaut 
 						 	to create a remote-monitoring check-in system'
-						icons={['JavaIcon', 'BootstrapIcon', 'RaspberryPiIcon']}
-					/>
-				</Grid>
-				<Grid item>
-					<ProjectCard
-						title='Battle Bros'
-						url='https://github.com/traison-diedrich/software-design'
-						image={battleBros}
-						subtitle='A group project using java to create a playable 
-						2D fighter.'
-						icons={['JavaIcon']}
+						icons={[
+							'JavaIcon',
+							'BootstrapIcon',
+							'RaspberryPiIcon',
+							'MicronautIcon',
+						]}
 					/>
 				</Grid>
 				<Grid item>
@@ -207,9 +240,19 @@ export const Projects: React.FC = () => {
 						title='Hybrid Images'
 						url='https://github.com/traison-diedrich/computer-vision/tree/main/homework2'
 						image={hybridImages}
-						subtitle='A python program using opencv to combine two images using 
-							Sobel operations and Fourier transform'
-						icons={['PythonIcon', 'OpencvIcon']}
+						subtitle='A Python program using OpenCV to combine two images using 
+							Sobel Operations and Fourier Transform'
+						icons={['PythonIcon', 'OpenCVIcon']}
+					/>
+				</Grid>
+				<Grid item>
+					<ProjectCard
+						title='Battle Bros'
+						url='https://github.com/traison-diedrich/software-design'
+						image={battleBros}
+						subtitle='A group project using Java to create a playable 
+						2D fighter.'
+						icons={['JavaIcon']}
 					/>
 				</Grid>
 			</Grid>
