@@ -55,7 +55,9 @@ export const AppHeader: React.FC = () => {
 							<a href='#intro'>
 								<Button sx={{ color: 'text.primary' }}>Home</Button>
 							</a>
-							<Button sx={{ color: 'text.primary' }}>About</Button>
+							<a href='#about'>
+								<Button sx={{ color: 'text.primary' }}>About</Button>
+							</a>
 							<a href='#projects'>
 								<Button sx={{ color: 'text.primary' }}>Projects</Button>
 							</a>

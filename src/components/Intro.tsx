@@ -78,16 +78,18 @@ export const Intro: React.FC = () => {
 				</Fade>
 				{!matches && (
 					<Box sx={{ display: 'flex', mt: 7 }}>
-						<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
-							<Button
-								variant='contained'
-								color='secondary'
-								sx={{
-									mr: 3,
-								}}>
-								about me
-							</Button>
-						</Grow>
+						<a href='#about'>
+							<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
+								<Button
+									variant='contained'
+									color='secondary'
+									sx={{
+										mr: 3,
+									}}>
+									about me
+								</Button>
+							</Grow>
+						</a>
 						<a href='#projects'>
 							<Grow
 								in={showButtons}
@@ -136,16 +138,19 @@ export const Intro: React.FC = () => {
 							mb: 4,
 							zIndex: 999,
 						}}>
-						<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
-							<Button
-								variant='contained'
-								sx={{
-									mb: 3,
-									py: 1,
-								}}>
-								about me
-							</Button>
-						</Grow>
+						<a href='#about'>
+							<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
+								<Button
+									variant='contained'
+									sx={{
+										mb: 3,
+										py: 1,
+										width: '100%',
+									}}>
+									about me
+								</Button>
+							</Grow>
+						</a>
 						<a href='#projects'>
 							<Grow
 								in={showButtons}
