@@ -6,44 +6,19 @@ import {
 	Grid,
 	Popover,
 	Typography,
+	useMediaQuery,
+	useTheme,
 } from '@mui/material';
 import * as React from 'react';
-import battleBros from '../assets/battleBros.png';
-import checkin from '../assets/checkin.jpeg';
-import hybridImages from '../assets/hybridImages.png';
-import {
-	BootstrapIcon,
-	JavaIcon,
-	MaterialUIIcon,
-	MicronautIcon,
-	OpenCVIcon,
-	PostgreSQLIcon,
-	PythonIcon,
-	RaspberryPiIcon,
-	ReactIcon,
-	TypeScriptIcon,
-} from '../assets/icons';
-import rpi from '../assets/rpi.jpg';
-import workoutPlanner from '../assets/workoutPlanner.jpg';
-
-const icons = {
-	BootstrapIcon,
-	JavaIcon,
-	MaterialUIIcon,
-	OpenCVIcon,
-	PostgreSQLIcon,
-	PythonIcon,
-	ReactIcon,
-	RaspberryPiIcon,
-	TypeScriptIcon,
-	MicronautIcon,
-};
+import icons from '../assets/icons';
+import images from '../assets/images';
 
 type IconName = keyof typeof icons;
 
 interface DynamicIconProps {
 	name: IconName;
 }
+
 function DynamicIcon({ name }: DynamicIconProps) {
 	const Icon = icons[name];
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -67,6 +42,8 @@ function DynamicIcon({ name }: DynamicIconProps) {
 					borderRadius: '25%',
 				}}
 			/>
+			{/* FIXME: popover says visible if user scrolls away with
+				mouse in the same position */}
 			<Popover
 				open={open}
 				anchorEl={anchorEl}
@@ -74,7 +51,8 @@ function DynamicIcon({ name }: DynamicIconProps) {
 				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
 				transformOrigin={{ vertical: 'top', horizontal: 'center' }}
 				sx={{ pointerEvents: 'none' }}
-				disableRestoreFocus>
+				disableRestoreFocus
+				disableScrollLock>
 				<Typography variant='subtitle1' color='primary' sx={{ p: 1 }}>
 					{name.toString().slice(0, -4)}
 				</Typography>
@@ -181,6 +159,9 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 // TODO: I think the background here should be a simple parallax
 // to keep things from being stale
 export const Projects: React.FC = () => {
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('md'));
+
 	return (
 		<Box
 			id='projects'
@@ -190,22 +171,33 @@ export const Projects: React.FC = () => {
 				justifyContent: 'center',
 				alignItems: 'center',
 				p: 5,
+				backgroundImage: matches
+					? `url(${images.spaceHorizontal})`
+					: `url(${images.spaceVertical})`,
+				backgroundAttachment: 'fixed',
+				backgroundPosition: 'center',
+				backgroundRepeat: 'no-repeat',
+				backgroundSize: 'cover',
 			}}>
 			<Typography variant='h2' color='secondary' sx={{ mb: 4 }}>
 				Recent Projects
 			</Typography>
-			<Grid container spacing={10} direction='row' justifyContent='center'>
+			{/* TODO: Long term I would like to be able to implement a slide-in 
+			slide-out effect here based on the visibility of the card. Note, 
+			using grid means that a row would have to slide in rather than just 1 
+			card */}
+			<Grid container spacing={6} direction='row' justifyContent='center'>
 				<Grid item>
 					<ProjectCard
 						title='Workout Planner'
 						url='https://workout-planner.fit'
-						image={workoutPlanner}
+						image={images.workoutPlanner}
 						subtitle='My first application, using React and Supabase to
 						create a workout planner with user authentication'
 						icons={[
-							'ReactIcon',
-							'TypeScriptIcon',
 							'MaterialUIIcon',
+							'TypeScriptIcon',
+							'ReactIcon',
 							'PostgreSQLIcon',
 						]}
 					/>
@@ -214,24 +206,24 @@ export const Projects: React.FC = () => {
 					<ProjectCard
 						title='Pi4Micronaut'
 						url='https://github.com/oss-slu/Pi4Micronaut'
-						image={rpi}
+						image={images.rpi}
 						subtitle="A library integrating the Micronaut Framework, 
 							Raspberry Pi's, and hardware to create IOT Applications"
-						icons={['JavaIcon', 'RaspberryPiIcon', 'MicronautIcon']}
+						icons={['JavaIcon', 'MicronautIcon', 'RaspberryPiIcon']}
 					/>
 				</Grid>
 				<Grid item>
 					<ProjectCard
 						title='Check-in System'
 						url='https://github.com/oss-slu/SLU_OSS_CheckIn'
-						image={checkin}
+						image={images.checkin}
 						subtitle='The first ever implementation of Pi4Micronaut 
 						 	to create a remote-monitoring check-in system'
 						icons={[
-							'JavaIcon',
 							'BootstrapIcon',
-							'RaspberryPiIcon',
+							'JavaIcon',
 							'MicronautIcon',
+							'RaspberryPiIcon',
 						]}
 					/>
 				</Grid>
@@ -239,9 +231,9 @@ export const Projects: React.FC = () => {
 					<ProjectCard
 						title='Hybrid Images'
 						url='https://github.com/traison-diedrich/computer-vision/tree/main/homework2'
-						image={hybridImages}
-						subtitle='A Python program using OpenCV to combine two images using 
-							Sobel Operations and Fourier Transform'
+						image={images.hybridImages}
+						subtitle='A Python program using OpenCV to combine two images
+						 using Sobel Operations and Fourier Transform'
 						icons={['PythonIcon', 'OpenCVIcon']}
 					/>
 				</Grid>
@@ -249,7 +241,7 @@ export const Projects: React.FC = () => {
 					<ProjectCard
 						title='Battle Bros'
 						url='https://github.com/traison-diedrich/software-design'
-						image={battleBros}
+						image={images.battleBros}
 						subtitle='A group project using Java to create a playable 
 						2D fighter.'
 						icons={['JavaIcon']}

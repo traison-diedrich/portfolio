@@ -1,9 +1,10 @@
 import { Box, Container, CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
-import AppHeader from './components/AppHeader';
+import { About } from './components/About';
+import { AppHeader } from './components/AppHeader';
 import { Contact } from './components/Contact';
-import Intro from './components/Intro';
+import { Intro } from './components/Intro';
 import { Projects } from './components/Projects';
 
 const theme = createTheme({
@@ -45,6 +46,7 @@ function App() {
 								alignItems: 'center',
 							}}>
 							<Intro />
+							<About />
 							<Projects />
 							<Contact />
 						</Box>

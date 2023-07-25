@@ -25,7 +25,7 @@ const HideOnScroll = ({ children }: HideOnScrollProps) => {
 	);
 };
 
-const AppHeader: React.FC = () => {
+export const AppHeader: React.FC = () => {
 	return (
 		<HideOnScroll>
 			<AppBar
@@ -69,5 +69,3 @@ const AppHeader: React.FC = () => {
 		</HideOnScroll>
 	);
 };
-
-export default AppHeader;

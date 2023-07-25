@@ -113,7 +113,7 @@ const ContactForm: React.FC = () => {
 				variant='contained'
 				color='secondary'
 				sx={{ width: '40%', mt: message.length > 0 ? 2 : 6 }}>
-				{waiting ? <CircularProgress size={24} color='primary' /> : 'Submit'}
+				{waiting ? <CircularProgress size={24} color='primary' /> : 'Send'}
 			</Button>
 		</Box>
 	);
@@ -226,7 +226,9 @@ export const Contact: React.FC = () => {
 				<Typography variant='h6' align='center' color='rgba(17, 17, 17, .6)'>
 					Or feel free to send me a message here
 				</Typography>
-				<a href='#contact-form'>
+				<a
+					href='#contact-form'
+					style={{ pointerEvents: matches ? 'none' : 'auto' }}>
 					<IconButton disabled={matches} color='primary'>
 						<ArrowForwardIos
 							sx={{
@@ -254,7 +256,7 @@ export const Contact: React.FC = () => {
 					className='player'
 					loop
 					autoplay
-					speed={0.5}
+					speed={0.3}
 					style={{
 						width: '100%',
 						height: '15vh',
@@ -283,7 +285,7 @@ export const Contact: React.FC = () => {
 						Contact Me
 					</Typography>
 					<Typography variant='body1' color='text.secondary' align='center'>
-						I usually respond in 24-48 hours
+						I usually respond within 24-48 hours
 					</Typography>
 					<ContactForm />
 				</Box>

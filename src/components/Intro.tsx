@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
 import Typewriter from 'typewriter-effect';
-import profilePic from '../assets/profCutout.png';
+import images from '../assets/images';
 
 // TODO: this very quickly became spaghetti code
 // can consolidate the two button boxes together and
@@ -14,7 +14,7 @@ import profilePic from '../assets/profCutout.png';
 // TODO: a background animation for the top black box here
 // would be eye catching
 
-const Intro: React.FC = () => {
+export const Intro: React.FC = () => {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -49,7 +49,7 @@ const Intro: React.FC = () => {
 				}}>
 				<div className='text title'>
 					<Typewriter
-						options={{ delay: 60 }}
+						options={{ delay: 70 }}
 						onInit={(typewriter) => {
 							typewriter
 								.pauseFor(500)
@@ -184,7 +184,7 @@ const Intro: React.FC = () => {
 					}}></Divider>
 			</Box>
 			<img
-				src={profilePic}
+				src={images.profilePic}
 				alt='Profile Picture'
 				style={{
 					position: 'absolute',
@@ -199,5 +199,3 @@ const Intro: React.FC = () => {
 		</Box>
 	);
 };
-
-export default Intro;
