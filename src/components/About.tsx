@@ -8,6 +8,8 @@ interface MovementButtonProps extends BoxProps {
 	onRight: () => void;
 }
 
+// TODO: this section needs to be height responsive but I don't know how yet...
+
 function MovementButton({ onLeft, onRight, ...props }: MovementButtonProps) {
 	return (
 		<Box
@@ -59,15 +61,15 @@ function MovementButton({ onLeft, onRight, ...props }: MovementButtonProps) {
 }
 
 export const About: React.FC = () => {
-	const [sliderPosition, setSliderPosition] = React.useState(15);
+	const [sliderPosition, setSliderPosition] = React.useState(10);
 
 	return (
 		<Box
 			id='about'
 			sx={{
 				position: 'relative',
-				height: '100vh',
 				width: '100%',
+				height: '100vh',
 				display: 'flex',
 			}}>
 			<Box
@@ -76,12 +78,15 @@ export const About: React.FC = () => {
 					width: '100%',
 					height: '100%',
 					bgcolor: 'secondary.main',
-					display: 'grid',
+					display: 'flex',
 					placeItems: 'center',
 					position: 'absolute',
 					zIndex: 2,
 					right: `${100 - sliderPosition}%`,
 					transition: 'right 0.9s ease',
+					pl: '10%',
+					pr: '20%',
+					py: '100px',
 				}}>
 				<Typography variant='h2' color='primary'>
 					Personal
@@ -93,25 +98,64 @@ export const About: React.FC = () => {
 					width: '100%',
 					height: '100%',
 					bgcolor: 'background.default',
-					display: 'grid',
-					placeItems: 'center',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
 					overflow: 'hidden',
 					position: 'absolute',
+					pl: '20%',
+					pr: '10%',
+					py: '100px',
 				}}>
-				<Typography variant='h2' color='secondary'>
-					Professional
-				</Typography>
+				<Box sx={{ height: 300, width: '100%', bgcolor: 'secondary.main' }}>
+					There is content here
+				</Box>
+				<Box sx={{ height: 300, width: '100%', bgcolor: 'secondary.main' }}>
+					There is content here
+				</Box>
+				<Box sx={{ height: 300, width: '100%', bgcolor: 'secondary.main' }}>
+					There is content here
+				</Box>
 			</Box>
+			<Typography
+				variant='h3'
+				sx={{
+					color: sliderPosition > 10 ? 'secondary.main' : 'primary.main',
+					writingMode: 'vertical-lr',
+					textOrientation: 'upright',
+					position: 'absolute',
+					top: '10%',
+					left: `${sliderPosition}%`,
+					transition: 'left 0.9s ease, transform 0.9s ease',
+					zIndex: 3,
+					transform: sliderPosition > 10 ? '' : 'translateX(-100%)',
+				}}>
+				ABOUT
+			</Typography>
+			<Typography
+				variant='h3'
+				sx={{
+					color: sliderPosition > 10 ? 'secondary.main' : 'primary.main',
+					writingMode: 'vertical-lr',
+					textOrientation: 'upright',
+					position: 'absolute',
+					top: '56%',
+					left: `${sliderPosition}%`,
+					transition: 'left 0.9s ease, transform 0.9s ease',
+					zIndex: 3,
+					transform: sliderPosition > 10 ? '' : 'translateX(-100%)',
+				}}>
+				ME
+			</Typography>
 			<MovementButton
-				onLeft={() => setSliderPosition(15)}
-				onRight={() => setSliderPosition(85)}
+				onLeft={() => setSliderPosition(10)}
+				onRight={() => setSliderPosition(90)}
 				sx={{
 					position: 'absolute',
 					top: '50%',
 					left: `${sliderPosition}%`,
 					transition: 'left 0.9s ease',
 					zIndex: 3,
-					offsetPosition: 'left top',
 					transform: 'translateX(-50%) translateY(-50%)',
 				}}
 			/>
