@@ -24,12 +24,13 @@ export const Intro: React.FC = () => {
 	return (
 		<Box
 			id='intro'
+			className='scroll-target'
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				// TODO: this height needs to take account the app header on page load
+				width: '100%',
 				height: '94vh',
-				minWidth: '100%',
+				minHeight: '615px',
 				position: 'relative',
 			}}>
 			<Box
@@ -44,8 +45,8 @@ export const Intro: React.FC = () => {
 					textAlign: matches ? 'left' : 'center',
 					pl: '10vw',
 					pr: matches ? '60vw' : '10vw',
-					pt: matches ? '10vh' : 0,
-					pb: 10,
+					pt: matches ? '20vh' : '25px',
+					pb: matches ? '10vh' : '125px',
 				}}>
 				<div className='text title'>
 					<Typewriter

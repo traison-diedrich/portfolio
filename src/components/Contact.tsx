@@ -168,25 +168,26 @@ export const Contact: React.FC = () => {
 	return (
 		<Box
 			id='contact'
+			className='scroll-target'
 			sx={{
-				height: matches ? '100vh' : '140vh',
 				minWidth: '100%',
 				bgcolor: 'secondary.main',
 				display: 'flex',
 				flexDirection: matches ? 'row' : 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
 				p: 5,
 			}}>
-			{/* TODO: This section looks a little stale for my taste */}
 			<Box
 				sx={{
 					minWidth: matches ? '50%' : '100%',
+					flex: 1,
 					height: '100%',
 					display: 'flex',
 					flexDirection: 'column',
-					justifyContent: 'center',
+					justifyContent: 'space-between',
 					alignItems: 'center',
-					gap: '1.5rem',
-					mt: matches ? 0 : 5,
+					gap: '2rem',
 				}}>
 				<Typography variant='h3' align='center'>
 					Let's Get in Touch
@@ -197,7 +198,6 @@ export const Contact: React.FC = () => {
 				<Box
 					sx={{
 						width: '70%',
-						height: '30%',
 						display: 'flex',
 						justifyContent: 'space-evenly',
 						gap: '2rem',
@@ -259,7 +259,7 @@ export const Contact: React.FC = () => {
 					speed={0.3}
 					style={{
 						width: '100%',
-						height: '15vh',
+						height: '9rem',
 					}}
 					rendererSettings={{
 						preserveAspectRatio: 'none',

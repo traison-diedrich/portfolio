@@ -1,14 +1,18 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, BoxProps, IconButton, Typography } from '@mui/material';
+import {
+	Box,
+	BoxProps,
+	IconButton,
+	Typography,
+	TypographyProps,
+} from '@mui/material';
 import * as React from 'react';
 
 interface MovementButtonProps extends BoxProps {
 	onLeft: () => void;
 	onRight: () => void;
 }
-
-// TODO: this section needs to be height responsive but I don't know how yet...
 
 function MovementButton({ onLeft, onRight, ...props }: MovementButtonProps) {
 	return (
@@ -60,23 +64,51 @@ function MovementButton({ onLeft, onRight, ...props }: MovementButtonProps) {
 	);
 }
 
+interface VerticalTextProps extends TypographyProps {
+	text: string;
+}
+
+const VerticalText: React.FC<VerticalTextProps> = ({ text, ...props }) => {
+	return (
+		<Typography
+			{...props}
+			style={{
+				fontSize: 'clamp(2rem, 5vw, 2.5rem)',
+				width: '60px',
+				writingMode: 'vertical-lr',
+				textOrientation: 'upright',
+				position: 'absolute',
+				transition: 'left 0.9s ease, transform 0.9s ease, color 0.9s ease',
+				zIndex: 3,
+				display: 'flex',
+				alignItems: 'center',
+			}}>
+			{text}
+		</Typography>
+	);
+};
+
 export const About: React.FC = () => {
 	const [sliderPosition, setSliderPosition] = React.useState(10);
+
+	const isLeft = sliderPosition < 50;
 
 	return (
 		<Box
 			id='about'
+			className='scroll-target'
 			sx={{
 				position: 'relative',
 				width: '100%',
 				height: '100vh',
-				display: 'flex',
+				minHeight: '730px',
+				overflow: 'hidden',
 			}}>
 			<Box
 				id='left'
 				sx={{
-					width: '100%',
 					height: '100%',
+					width: '100%',
 					bgcolor: 'secondary.main',
 					display: 'flex',
 					placeItems: 'center',
@@ -95,8 +127,8 @@ export const About: React.FC = () => {
 			<Box
 				id='right'
 				sx={{
-					width: '100%',
 					height: '100%',
+					width: '100%',
 					bgcolor: 'background.default',
 					display: 'flex',
 					flexDirection: 'column',
@@ -110,43 +142,25 @@ export const About: React.FC = () => {
 				<Box sx={{ height: 300, width: '100%', bgcolor: 'secondary.main' }}>
 					There is content here
 				</Box>
-				<Box sx={{ height: 300, width: '100%', bgcolor: 'secondary.main' }}>
-					There is content here
-				</Box>
-				<Box sx={{ height: 300, width: '100%', bgcolor: 'secondary.main' }}>
-					There is content here
-				</Box>
 			</Box>
-			<Typography
-				variant='h3'
+			<VerticalText
+				text='ABOUT'
 				sx={{
-					color: sliderPosition > 10 ? 'secondary.main' : 'primary.main',
-					writingMode: 'vertical-lr',
-					textOrientation: 'upright',
-					position: 'absolute',
-					top: '10%',
+					color: isLeft ? 'primary.main' : 'secondary.main',
+					bottom: '56%',
 					left: `${sliderPosition}%`,
-					transition: 'left 0.9s ease, transform 0.9s ease',
-					zIndex: 3,
-					transform: sliderPosition > 10 ? '' : 'translateX(-100%)',
-				}}>
-				ABOUT
-			</Typography>
-			<Typography
-				variant='h3'
+					transform: isLeft ? 'translateX(-100%)' : '',
+				}}
+			/>
+			<VerticalText
+				text='ME'
 				sx={{
-					color: sliderPosition > 10 ? 'secondary.main' : 'primary.main',
-					writingMode: 'vertical-lr',
-					textOrientation: 'upright',
-					position: 'absolute',
+					color: isLeft ? 'primary.main' : 'secondary.main',
 					top: '56%',
 					left: `${sliderPosition}%`,
-					transition: 'left 0.9s ease, transform 0.9s ease',
-					zIndex: 3,
-					transform: sliderPosition > 10 ? '' : 'translateX(-100%)',
-				}}>
-				ME
-			</Typography>
+					transform: isLeft ? 'translateX(-100%)' : '',
+				}}
+			/>
 			<MovementButton
 				onLeft={() => setSliderPosition(10)}
 				onRight={() => setSliderPosition(90)}

@@ -25,3 +25,7 @@
 html {
 	scroll-behavior: smooth;
 }
+
+.scroll-target {
+	scroll-margin-top: 60px;
+}

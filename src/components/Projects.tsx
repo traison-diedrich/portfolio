@@ -4,10 +4,8 @@ import {
 	CardContent,
 	CardMedia,
 	Grid,
-	Popover,
+	Popper,
 	Typography,
-	useMediaQuery,
-	useTheme,
 } from '@mui/material';
 import * as React from 'react';
 import icons from '../assets/icons';
@@ -24,16 +22,12 @@ function DynamicIcon({ name }: DynamicIconProps) {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
-	const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
+	const handleMouse = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(anchorEl ? null : event.currentTarget);
 	};
 
 	return Icon ? (
-		<Box onMouseEnter={handleOpen} onMouseLeave={handleClose}>
+		<Box onMouseEnter={handleMouse} onMouseLeave={handleMouse}>
 			<Icon
 				sx={{
 					fontSize: '2.8rem',
@@ -44,19 +38,13 @@ function DynamicIcon({ name }: DynamicIconProps) {
 			/>
 			{/* FIXME: popover says visible if user scrolls away with
 				mouse in the same position */}
-			<Popover
-				open={open}
-				anchorEl={anchorEl}
-				onClose={handleClose}
-				anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-				transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-				sx={{ pointerEvents: 'none' }}
-				disableRestoreFocus
-				disableScrollLock>
-				<Typography variant='subtitle1' color='primary' sx={{ p: 1 }}>
-					{name.toString().slice(0, -4)}
-				</Typography>
-			</Popover>
+			<Popper open={open} anchorEl={anchorEl}>
+				<Box sx={{ bgcolor: 'background.default', px: 1, borderRadius: '3px' }}>
+					<Typography variant='subtitle1' color='secondary'>
+						{name.toString().slice(0, -4)}
+					</Typography>
+				</Box>
+			</Popper>
 		</Box>
 	) : null;
 }
@@ -80,6 +68,7 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 		<Card
 			variant='outlined'
 			sx={{
+				borderColor: 'background.default',
 				width: 400,
 				height: 420,
 				transition: 'box-shadow 0.3s',
@@ -159,25 +148,17 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 // TODO: I think the background here should be a simple parallax
 // to keep things from being stale
 export const Projects: React.FC = () => {
-	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
-
 	return (
 		<Box
 			id='projects'
+			className='scroll-target'
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
 				alignItems: 'center',
 				p: 5,
-				backgroundImage: matches
-					? `url(${images.spaceHorizontal})`
-					: `url(${images.spaceVertical})`,
-				backgroundAttachment: 'fixed',
-				backgroundPosition: 'center',
-				backgroundRepeat: 'no-repeat',
-				backgroundSize: 'cover',
+				backgroundImage: 'linear-gradient(to bottom, #111111 30%, #eeeeee 70%)',
 			}}>
 			<Typography variant='h2' color='secondary' sx={{ mb: 4 }}>
 				Recent Projects
