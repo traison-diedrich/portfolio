@@ -29,6 +29,9 @@ const theme = createTheme({
 	},
 });
 
+// TODO: need to make the website mobile compatible by removing
+// some excess padding and margins for the media query
+
 function App() {
 	return (
 		<React.Fragment>
