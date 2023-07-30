@@ -224,7 +224,7 @@ export const Contact: React.FC = () => {
 					<EmailButton />
 				</Box>
 				<Typography variant='h6' align='center' color='rgba(17, 17, 17, .6)'>
-					Or feel free to send me a message here
+					Or feel free to send me a message right here
 				</Typography>
 				<a
 					href='#contact-form'
