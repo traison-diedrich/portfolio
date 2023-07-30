@@ -189,7 +189,8 @@ export const Projects: React.FC = () => {
 						url='https://github.com/oss-slu/Pi4Micronaut'
 						image={images.rpi}
 						subtitle="A library integrating the Micronaut Framework, 
-							Raspberry Pi's, and hardware to create IOT Applications"
+							Raspberry Pi's, and hardware to create flexible 
+							IOT Applications"
 						icons={['JavaIcon', 'MicronautIcon', 'RaspberryPiIcon']}
 					/>
 				</Grid>

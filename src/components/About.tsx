@@ -5,6 +5,7 @@ import {
 	Box,
 	BoxProps,
 	IconButton,
+	MobileStepper,
 	Typography,
 	TypographyProps,
 	useMediaQuery,
@@ -129,92 +130,129 @@ const Professional: React.FC<MyBoxProps> = ({ matches, ...props }) => {
 interface Image {
 	url: string;
 	alt: string;
-	caption: string;
 }
 interface CarouselProps {
-	images: Image[];
+	images1: Image[];
+	images2: Image[];
+	captions: string[];
 	matches: boolean;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ images, matches }) => {
-	const [imageIndex, setImageIndex] = React.useState(0);
+const Carousel: React.FC<CarouselProps> = ({
+	images1,
+	images2,
+	captions,
+	matches,
+}) => {
+	const [curr, setCurr] = React.useState(0);
 
 	const prev = () => {
-		setImageIndex(imageIndex === 0 ? images.length - 1 : imageIndex - 1);
+		setCurr(curr === 0 ? images1.length - 1 : curr - 1);
 	};
 
 	const next = () => {
-		const prev = imageIndex === 0 ? images.length - 1 : imageIndex - 1;
-		const next = imageIndex === images.length - 1 ? 0 : imageIndex + 1;
-
-		const prevImage = document.getElementById(`image-${prev}`);
-		const currImage = document.getElementById(`image-${imageIndex}`);
-		const nextImage = document.getElementById(`image-${next}`);
-
-		if (prevImage) prevImage.style.opacity = '1';
-		if (currImage) currImage.style.left = '150%';
-		if (nextImage) {
-			nextImage.style.opacity = '0';
-			nextImage.style.left = '50%';
-		}
-
-		setTimeout(() => {
-			setImageIndex(imageIndex === images.length - 1 ? 0 : imageIndex + 1);
-		}, 200);
+		setCurr(curr === images1.length - 1 ? 0 : curr + 1);
 	};
 
 	return (
 		<Box
 			sx={{
-				height: '100%',
 				width: '100%',
-				border: '2px solid #111111',
+				maxWidth: '360px',
+				display: 'flex',
+				flexDirection: 'column',
+				justifyContent: 'flex-start',
+				alignItems: 'center',
+				gap: '2rem',
+				p: '10%',
+				bgcolor: '#999999',
 				borderRadius: '5px',
-				position: 'relative',
-				overflow: 'hidden',
 			}}>
-			{images.map((image, index) => (
-				<Box
-					key={index}
-					id={`image-${index}`}
-					component='img'
-					src={image.url}
-					alt={image.alt}
-					sx={{
-						height: '400px',
-						aspectRatio: 4 / 5,
-						objectFit: 'cover',
-						borderRadius: '5px',
-						position: 'absolute',
-						top: '45%',
-						left: '50%',
-						transform: 'translate(-50%, -50%)',
-						opacity: 0,
-						transition: 'opacity 0.5s ease, left 1s ease',
-					}}
-				/>
-			))}
 			<Box
 				sx={{
-					width: '70%',
-					display: 'flex',
-					justifyContent: 'space-around',
-					alignItems: 'center',
-					position: 'absolute',
-					bottom: '5%',
-					left: '50%',
-					transform: 'translateX(-50%)',
+					width: '100%',
+					position: 'relative',
+					overflow: 'hidden',
 				}}>
-				<IconButton onClick={prev}>
-					<ChevronLeft />
-				</IconButton>
-				<Typography variant='subtitle1'>
-					{images[imageIndex].caption}
-				</Typography>
-				<IconButton onClick={next}>
-					<ChevronRight />
-				</IconButton>
+				<Box
+					sx={{
+						display: 'flex',
+						transform: `translateX(-${curr * 100}%)`,
+						transition: 'transform 1s ease',
+					}}>
+					{images1.map((image) => (
+						<Box
+							component='img'
+							src={image.url}
+							alt={image.alt}
+							sx={{
+								width: '100%',
+								aspectRatio: 4 / 5,
+								objectFit: 'cover',
+								borderRadius: '5px 5px 0 0',
+							}}
+						/>
+					))}
+				</Box>
+				<MobileStepper
+					steps={images1.length}
+					position='static'
+					activeStep={curr}
+					nextButton={
+						<IconButton color='secondary' onClick={next}>
+							<ChevronRight />
+						</IconButton>
+					}
+					backButton={
+						<IconButton color='secondary' onClick={prev}>
+							<ChevronLeft />
+						</IconButton>
+					}
+					sx={{
+						borderRadius: '0 0 5px 5px',
+						'& .MuiMobileStepper-dotActive': {
+							backgroundColor: '#eeeeee!important',
+						},
+						'& .MuiMobileStepper-dot': {
+							backgroundColor: 'text.secondary',
+						},
+					}}
+				/>
+				{/* <Box
+					sx={{
+						width: imageWidth,
+						height: '100%',
+						position: 'relative',
+						overflow: 'hidden',
+					}}>
+					<Box
+						sx={{
+							display: 'flex',
+							transform: `translateX(-${(images2.length - curr - 1) * 100}%)`,
+							transition: 'transform 1s ease',
+						}}>
+						{images2
+							.slice()
+							.reverse()
+							.map((image) => (
+								<Box
+									component='img'
+									src={image.url}
+									alt={image.alt}
+									sx={{
+										width: imageWidth,
+										aspectRatio: 4 / 5,
+										objectFit: 'cover',
+										borderRadius: '5px',
+									}}
+								/>
+								))}
+								</Box>
+							</Box> */}
 			</Box>
+			<Typography variant='body1' align='center'>
+				{captions[curr]}
+			</Typography>
 		</Box>
 	);
 };
@@ -228,18 +266,21 @@ const Personal: React.FC<MyBoxProps> = ({
 		{
 			url: images.rpi,
 			alt: 'rpi',
-			caption: 'this is a raspberry pi',
 		},
 		{
 			url: images.workoutPlanner,
 			alt: 'workout planner',
-			caption: 'this is the workout planner',
 		},
 		{
 			url: images.battleBros,
 			alt: 'Battle Bros',
-			caption: 'these are the battle bros',
 		},
+	];
+
+	const captions: string[] = [
+		'this is a raspberry pi',
+		'this is the workout planner',
+		'these are the battle bros',
 	];
 
 	return (
@@ -259,17 +300,15 @@ const Personal: React.FC<MyBoxProps> = ({
 				right: `${100 - (sliderPosition || 0)}%`,
 				transition: 'right 0.9s ease',
 			}}>
-			<Typography variant='h2' align='center'>
+			<Typography variant='h3' align='center' sx={{ mb: 4 }}>
 				Beyond Development
 			</Typography>
-			<Typography
-				variant='h6'
-				align='center'
-				color='rgba(13, 13, 13, 0.6)'
-				sx={{ mb: 2 }}>
-				A little more about my interests and background
-			</Typography>
-			<Carousel images={CarouselImages} matches={matches} />
+			<Carousel
+				images1={CarouselImages}
+				images2={CarouselImages}
+				captions={captions}
+				matches={matches}
+			/>
 		</Box>
 	);
 };
@@ -289,7 +328,7 @@ export const About: React.FC = () => {
 				position: 'relative',
 				width: '100%',
 				height: '100vh',
-				minHeight: '730px',
+				minHeight: '900px',
 				overflow: 'hidden',
 			}}>
 			<Personal
@@ -299,7 +338,7 @@ export const About: React.FC = () => {
 					bgcolor: 'secondary.main',
 					pl: '20%',
 					pr: '10%',
-					py: '100px',
+					py: '50px',
 				}}
 			/>
 			<Professional
@@ -308,7 +347,7 @@ export const About: React.FC = () => {
 					bgcolor: 'background.default',
 					pl: '20%',
 					pr: '10%',
-					py: '100px',
+					py: '50px',
 				}}
 			/>
 			<VerticalText
