@@ -5,6 +5,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 .text {
 	font-family: 'Ysabeau Office', sans-serif;
 }
@@ -22,10 +23,14 @@
 	color: rgba(238, 238, 238, 0.6);
 }
 
+.a {
+	text-decoration: none;
+}
+
 html {
 	scroll-behavior: smooth;
 }
 
-.scroll-target {
+/* .scroll-target {
 	scroll-margin-top: 60px;
-}
+} */

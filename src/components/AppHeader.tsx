@@ -1,23 +1,28 @@
 import * as React from 'react';
 
+import MenuIcon from '@mui/icons-material/Menu';
 import {
 	AppBar,
 	Box,
 	Button,
 	Container,
+	IconButton,
+	Menu,
+	MenuItem,
 	Slide,
 	Toolbar,
 	Typography,
+	useMediaQuery,
 	useScrollTrigger,
+	useTheme,
 } from '@mui/material';
 
 interface HideOnScrollProps {
+	trigger: boolean;
 	children: React.ReactElement;
 }
 
-const HideOnScroll = ({ children }: HideOnScrollProps) => {
-	const trigger = useScrollTrigger();
-
+const HideOnScroll = ({ trigger, children }: HideOnScrollProps) => {
 	return (
 		<Slide appear={false} direction='down' in={!trigger}>
 			{children}
@@ -26,8 +31,41 @@ const HideOnScroll = ({ children }: HideOnScrollProps) => {
 };
 
 export const AppHeader: React.FC = () => {
+	const trigger = useScrollTrigger();
+
+	const theme = useTheme();
+	const mobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+
+	React.useEffect(() => {
+		if (trigger && anchorEl) {
+			onClose();
+		}
+	}, [trigger, anchorEl]);
+
+	const toggleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(anchorEl ? null : event.currentTarget);
+	};
+
+	const onClose = () => {
+		setAnchorEl(null);
+	};
+
+	const handleMenuItemClick = (sectionId: string) => () => {
+		onClose();
+
+		setTimeout(() => {
+			const element = document.getElementById(sectionId);
+			if (element) {
+				element.scrollIntoView({ behavior: 'smooth' });
+			}
+		}, 100);
+	};
+
 	return (
-		<HideOnScroll>
+		<HideOnScroll trigger={trigger}>
 			<AppBar
 				position='sticky'
 				elevation={0}
@@ -44,27 +82,66 @@ export const AppHeader: React.FC = () => {
 							}}>
 							TRAISON DIEDRICH
 						</Typography>
-						<Box
-							sx={{
-								marginLeft: 'auto',
-								display: 'flex',
-								maxWidth: '350px',
-								width: '100%',
-								justifyContent: 'space-around',
-							}}>
-							<a href='#intro'>
-								<Button sx={{ color: 'text.primary' }}>Home</Button>
-							</a>
-							<a href='#about'>
-								<Button sx={{ color: 'text.primary' }}>About</Button>
-							</a>
-							<a href='#projects'>
-								<Button sx={{ color: 'text.primary' }}>Projects</Button>
-							</a>
-							<a href='#contact'>
-								<Button sx={{ color: 'text.primary' }}>Contact</Button>
-							</a>
-						</Box>
+						{mobile ? (
+							<>
+								<IconButton onClick={toggleMenu} sx={{ marginLeft: 'auto' }}>
+									<MenuIcon sx={{ color: 'text.primary' }} />
+								</IconButton>
+								<Menu
+									anchorEl={anchorEl}
+									open={open}
+									onClose={onClose}
+									disableScrollLock
+									anchorOrigin={{
+										vertical: 'bottom',
+										horizontal: 'right',
+									}}
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									sx={{
+										'& .MuiPaper-root': {
+											color: 'primary.main',
+										},
+									}}>
+									<MenuItem onClick={handleMenuItemClick('intro')}>
+										Home
+									</MenuItem>
+									<MenuItem onClick={handleMenuItemClick('about')}>
+										About
+									</MenuItem>
+									<MenuItem onClick={handleMenuItemClick('projects')}>
+										Projects
+									</MenuItem>
+									<MenuItem onClick={handleMenuItemClick('contact')}>
+										Contact
+									</MenuItem>
+								</Menu>
+							</>
+						) : (
+							<Box
+								sx={{
+									marginLeft: 'auto',
+									display: 'flex',
+									maxWidth: '350px',
+									width: '100%',
+									justifyContent: 'space-around',
+								}}>
+								<a href='#intro'>
+									<Button sx={{ color: 'text.primary' }}>Home</Button>
+								</a>
+								<a href='#about'>
+									<Button sx={{ color: 'text.primary' }}>About</Button>
+								</a>
+								<a href='#projects'>
+									<Button sx={{ color: 'text.primary' }}>Projects</Button>
+								</a>
+								<a href='#contact'>
+									<Button sx={{ color: 'text.primary' }}>Contact</Button>
+								</a>
+							</Box>
+						)}
 					</Toolbar>
 				</Container>
 			</AppBar>

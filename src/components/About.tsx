@@ -127,15 +127,14 @@ const Carousel: React.FC<CarouselProps> = ({
 		<Box
 			sx={{
 				width: '100%',
-				maxWidth: matches ? '1050px' : '390px',
+				maxWidth: matches ? '1100px' : '450px',
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'space-around',
 				alignItems: 'center',
 				gap: '1rem',
-				pt: '1rem',
-				px: '1rem',
-				pb: '5rem',
+				pt: matches ? '2rem' : '',
+				pb: 1,
 				bgcolor: 'background.default',
 				borderRadius: '5px',
 				position: 'relative',
@@ -156,31 +155,35 @@ const Carousel: React.FC<CarouselProps> = ({
 					/>
 				)}
 			</Box>
+			<IconButton
+				color='secondary'
+				onClick={prev}
+				sx={{ position: 'absolute', top: '38%', left: matches ? '4%' : 0 }}>
+				<ChevronLeft sx={{ fontSize: '2.2rem' }} />
+			</IconButton>
+			<IconButton
+				color='secondary'
+				onClick={next}
+				sx={{ position: 'absolute', top: '38%', right: matches ? '4%' : 0 }}>
+				<ChevronRight sx={{ fontSize: '2.2rem' }} />
+			</IconButton>
 			<Typography
 				color='text.primary'
 				variant='body1'
 				align='center'
-				sx={{ mx: matches ? '20%' : '10%' }}>
+				sx={{
+					width: matches ? '55%' : '90%',
+					height: matches ? '45px' : '65px',
+				}}>
 				{captions[curr]}
 			</Typography>
 			<MobileStepper
 				steps={images1.length}
 				position='static'
 				activeStep={curr}
-				nextButton={
-					<IconButton color='secondary' onClick={next}>
-						<ChevronRight sx={{ fontSize: '2.5rem' }} />
-					</IconButton>
-				}
-				backButton={
-					<IconButton color='secondary' onClick={prev}>
-						<ChevronLeft sx={{ fontSize: '2.5rem' }} />
-					</IconButton>
-				}
+				nextButton={null}
+				backButton={null}
 				sx={{
-					width: matches ? '50%' : '100%',
-					position: 'absolute',
-					bottom: '0px',
 					borderRadius: '0 0 5px 5px',
 					'& .MuiMobileStepper-dotActive': {
 						backgroundColor: '#eeeeee!important',
@@ -199,25 +202,40 @@ const Personal: React.FC<MyBoxProps> = ({
 	matches,
 	...props
 }) => {
-	const CarouselImages: Image[] = [
+	const PrimaryImages: Image[] = [
 		{
-			url: images.rpi,
-			alt: 'rpi',
+			url: images.graduation1,
+			alt: 'Graduation Photo',
 		},
 		{
-			url: images.workoutPlanner,
-			alt: 'workout planner',
+			url: images.bodybuilding1,
+			alt: 'Bodybuilding Pose',
 		},
 		{
-			url: images.battleBros,
-			alt: 'Battle Bros',
+			url: images.cole1,
+			alt: 'My dog cole',
+		},
+	];
+
+	const SecondaryImages: Image[] = [
+		{
+			url: images.graduation2,
+			alt: 'Graduation Photo',
+		},
+		{
+			url: images.bodybuilding2,
+			alt: 'Bodybuilding Pose',
+		},
+		{
+			url: images.cole2,
+			alt: 'My dog cole',
 		},
 	];
 
 	const captions: string[] = [
-		'this is a raspberry pi',
-		'this is the workout planner',
-		'these are the battle bros',
+		'I recently graduated from Saint Louis University with my Bachelor of Arts in Computer Science.',
+		'Bodybuilding has been my most recent athletic challenge.',
+		"I'm a proud dog dad to a beautiful Aussie-Doodle, Cole",
 	];
 
 	return (
@@ -227,11 +245,6 @@ const Personal: React.FC<MyBoxProps> = ({
 			style={{
 				height: '100%',
 				width: '100%',
-				display: 'flex',
-				flexDirection: 'column',
-				justifyContent: 'flex-start',
-				alignItems: 'center',
-				gap: '2rem',
 				position: 'absolute',
 				zIndex: 2,
 				right: `${100 - (sliderPosition || 0)}%`,
@@ -239,24 +252,38 @@ const Personal: React.FC<MyBoxProps> = ({
 			}}>
 			<Box
 				sx={{
+					height: '100%',
+					width: '100%',
+					position: 'relative',
 					display: 'grid',
 					placeItems: 'center',
-					gap: '1rem',
-					px: '10%',
+					pt: '10vh',
 				}}>
-				<Typography variant='h3' align='center'>
-					Beyond Development
-				</Typography>
-				<Typography color='rgba(17,17,17, 0.6)' variant='h6' align='center'>
-					My life and interests outside of coding
-				</Typography>
+				<Box
+					sx={{
+						display: 'grid',
+						placeItems: 'center',
+						gap: '1rem',
+						position: 'absolute',
+						top: 0,
+					}}>
+					<Typography variant='h4' align='center'>
+						Beyond Development
+					</Typography>
+					<Typography
+						color='rgba(17,17,17, 0.6)'
+						variant='subtitle1'
+						align='center'>
+						My life and interests outside of coding
+					</Typography>
+				</Box>
+				<Carousel
+					images1={PrimaryImages}
+					images2={SecondaryImages}
+					captions={captions}
+					matches={matches}
+				/>
 			</Box>
-			<Carousel
-				images1={CarouselImages}
-				images2={CarouselImages}
-				captions={captions}
-				matches={matches}
-			/>
 		</Box>
 	);
 };
