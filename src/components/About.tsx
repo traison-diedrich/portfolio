@@ -44,21 +44,18 @@ const Professional: React.FC<MyBoxProps> = ({ matches, ...props }) => {
 	);
 };
 
-interface Image {
-	url: string;
-	alt: string;
-}
-
 interface ImageSliderProps extends BoxProps {
-	images: Image[];
+	images: string[];
 	curr: number;
 	reverse: boolean;
+	matches: boolean;
 }
 
 const ImageSlider: React.FC<ImageSliderProps> = ({
 	images,
 	curr,
 	reverse,
+	matches,
 	...props
 }) => {
 	let mappedImages = images;
@@ -85,13 +82,12 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
 				{mappedImages.map((image) => (
 					<Box
 						component='img'
-						src={image.url}
-						alt={image.alt}
+						src={image}
 						sx={{
 							width: '100%',
 							aspectRatio: 4 / 5,
 							objectFit: 'cover',
-							borderRadius: '5px',
+							borderRadius: matches ? '5px' : '5px 5px 0 0',
 						}}
 					/>
 				))}
@@ -101,8 +97,8 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
 };
 
 interface CarouselProps {
-	images1: Image[];
-	images2: Image[];
+	images1: string[];
+	images2: string[];
 	captions: string[];
 	matches: boolean;
 }
@@ -144,13 +140,17 @@ const Carousel: React.FC<CarouselProps> = ({
 					images={images1}
 					curr={curr}
 					reverse={false}
-					sx={{ width: matches ? '42%' : '100%' }}
+					matches={matches}
+					sx={{
+						width: matches ? '42%' : '100%',
+					}}
 				/>
 				{matches && (
 					<ImageSlider
 						images={images2}
 						curr={curr}
 						reverse={true}
+						matches={matches}
 						sx={{ width: matches ? '42%' : '100%' }}
 					/>
 				)}
@@ -202,40 +202,28 @@ const Personal: React.FC<MyBoxProps> = ({
 	matches,
 	...props
 }) => {
-	const PrimaryImages: Image[] = [
-		{
-			url: images.graduation1,
-			alt: 'Graduation Photo',
-		},
-		{
-			url: images.bodybuilding1,
-			alt: 'Bodybuilding Pose',
-		},
-		{
-			url: images.cole1,
-			alt: 'My dog cole',
-		},
+	const PrimaryImages: string[] = [
+		images.graduation1,
+		images.bodybuilding1,
+		images.cole1,
+		images.family2,
+		images.nature1,
 	];
 
-	const SecondaryImages: Image[] = [
-		{
-			url: images.graduation2,
-			alt: 'Graduation Photo',
-		},
-		{
-			url: images.bodybuilding2,
-			alt: 'Bodybuilding Pose',
-		},
-		{
-			url: images.cole2,
-			alt: 'My dog cole',
-		},
+	const SecondaryImages: string[] = [
+		images.graduation2,
+		images.bodybuilding2,
+		images.cole2,
+		images.family1,
+		images.nature2,
 	];
 
 	const captions: string[] = [
 		'I recently graduated from Saint Louis University with my Bachelor of Arts in Computer Science.',
-		'Bodybuilding has been my most recent athletic challenge.',
-		"I'm a proud dog dad to a beautiful Aussie-Doodle, Cole",
+		'Bodybuilding is what inspired my most recent app, Workout Planner. Combining fitness and technology is what I do.',
+		"I'm a proud father to a goofy Aussie-Doodle, Cole",
+		"I'm one of four, and I have two amazing nieces. Family plays a big role in my life.",
+		'In what time I have left, I love to get out and explore the world.',
 	];
 
 	return (
