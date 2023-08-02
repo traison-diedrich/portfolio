@@ -8,10 +8,9 @@ import {
 	MobileStepper,
 	Typography,
 	TypographyProps,
-	useMediaQuery,
-	useTheme,
 } from '@mui/material';
 import * as React from 'react';
+import { useBreakpoint } from '../BreakpointProvider';
 import images from '../assets/images';
 
 interface MyBoxProps extends BoxProps {
@@ -360,8 +359,7 @@ const VerticalText: React.FC<VerticalTextProps> = ({ text, ...props }) => {
 };
 
 export const About: React.FC = () => {
-	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
+	const breakpoint = useBreakpoint();
 
 	const [sliderPosition, setSliderPosition] = React.useState(10);
 	const isLeft = sliderPosition < 50;
@@ -378,7 +376,7 @@ export const About: React.FC = () => {
 				overflow: 'hidden',
 			}}>
 			<Personal
-				matches={matches}
+				matches={breakpoint === 'large'}
 				sliderPosition={sliderPosition}
 				sx={{
 					bgcolor: 'secondary.main',
@@ -388,12 +386,13 @@ export const About: React.FC = () => {
 				}}
 			/>
 			<Professional
-				matches={matches}
+				matches={breakpoint === 'large'}
 				sx={{
 					bgcolor: 'background.default',
 					pl: '20%',
-					pr: '10%',
+					pr: breakpoint === 'mobile' && isLeft ? '10%' : '20%',
 					py: '50px',
+					transition: 'padding 0.9s ease',
 				}}
 			/>
 			<VerticalText
@@ -401,7 +400,9 @@ export const About: React.FC = () => {
 				sx={{
 					color: isLeft ? 'primary.main' : 'secondary.main',
 					bottom: '56%',
-					left: `${sliderPosition}%`,
+					left: `${
+						sliderPosition + (breakpoint === 'mobile' ? (isLeft ? 3 : -3) : 0)
+					}%`,
 					transform: isLeft ? 'translateX(-100%)' : '',
 				}}
 			/>
@@ -410,7 +411,9 @@ export const About: React.FC = () => {
 				sx={{
 					color: isLeft ? 'primary.main' : 'secondary.main',
 					top: '56%',
-					left: `${sliderPosition}%`,
+					left: `${
+						sliderPosition + (breakpoint === 'mobile' ? (isLeft ? 3 : -3) : 0)
+					}%`,
 					transform: isLeft ? 'translateX(-100%)' : '',
 				}}
 			/>

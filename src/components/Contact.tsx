@@ -14,10 +14,9 @@ import {
 	Snackbar,
 	TextField,
 	Typography,
-	useTheme,
 } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
+import { useBreakpoint } from '../BreakpointProvider';
 import airplaneAnimation from '../assets/lotties/airplaneAnimation.json';
 
 const ContactTextField: React.FC<{ title: string; multiline: boolean }> = ({
@@ -33,15 +32,17 @@ const ContactTextField: React.FC<{ title: string; multiline: boolean }> = ({
 				p: 2,
 				mb: 2,
 			}}>
-			{/* TODO: the placeholder value is still way too transparent to be legible */}
 			<TextField
 				variant='standard'
-				placeholder={title}
+				label={title}
 				name={title}
 				multiline={multiline}
 				rows={multiline ? 3 : 0}
 				fullWidth
 				required
+				InputLabelProps={{
+					style: { color: 'rgba(231, 231, 231, 0.87)' },
+				}}
 			/>
 		</Box>
 	);
@@ -141,7 +142,7 @@ const EmailButton: React.FC = () => {
 		<>
 			<Box sx={{ bgcolor: 'primary.main', borderRadius: '50%', p: 1 }}>
 				<IconButton color='secondary' onClick={onClick}>
-					<Email sx={{ fontSize: '5.0rem' }} />
+					<Email sx={{ fontSize: 'clamp(2rem, 12vw, 5rem)' }} />
 				</IconButton>
 			</Box>
 			<Snackbar
@@ -162,25 +163,24 @@ const EmailButton: React.FC = () => {
 };
 
 export const Contact: React.FC = () => {
-	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
+	const breakpoint = useBreakpoint();
 
 	return (
 		<Box
 			id='contact'
 			className='scroll-target'
 			sx={{
-				minWidth: '100%',
+				width: '100%',
 				bgcolor: 'secondary.main',
 				display: 'flex',
-				flexDirection: matches ? 'row' : 'column',
+				flexDirection: breakpoint === 'large' ? 'row' : 'column',
 				alignItems: 'center',
 				justifyContent: 'center',
 				p: 5,
 			}}>
 			<Box
 				sx={{
-					minWidth: matches ? '50%' : '100%',
+					minWidth: breakpoint === 'large' ? '50%' : '100%',
 					flex: 1,
 					height: '100%',
 					display: 'flex',
@@ -189,11 +189,14 @@ export const Contact: React.FC = () => {
 					alignItems: 'center',
 					gap: '2rem',
 				}}>
-				<Typography variant='h3' align='center'>
+				<Typography fontSize='clamp(1.5rem, 10vw, 3rem)' align='center'>
 					Let's Get in Touch
 				</Typography>
-				<Typography variant='h6' align='center' color='rgba(17, 17, 17, .6)'>
-					You can connect with me at the following platforms
+				<Typography
+					fontSize='clamp(.8rem, 4vw, 2rem)'
+					align='center'
+					color='rgba(17, 17, 17, .6)'>
+					You can connect with me via the following platforms
 				</Typography>
 				<Box
 					sx={{
@@ -209,7 +212,7 @@ export const Contact: React.FC = () => {
 						target='_blank'
 						sx={{ bgcolor: 'primary.main', borderRadius: '50%', p: 1 }}>
 						<IconButton color='secondary'>
-							<LinkedIn sx={{ fontSize: '5.0rem' }} />
+							<LinkedIn sx={{ fontSize: 'clamp(2rem, 12vw, 5rem)' }} />
 						</IconButton>
 					</Box>
 					<Box
@@ -218,22 +221,25 @@ export const Contact: React.FC = () => {
 						target='_blank'
 						sx={{ bgcolor: 'primary.main', borderRadius: '50%', p: 1 }}>
 						<IconButton color='secondary'>
-							<Instagram sx={{ fontSize: '5.0rem' }} />
+							<Instagram sx={{ fontSize: 'clamp(2rem, 12vw, 5rem)' }} />
 						</IconButton>
 					</Box>
 					<EmailButton />
 				</Box>
-				<Typography variant='h6' align='center' color='rgba(17, 17, 17, .6)'>
+				<Typography
+					fontSize='clamp(.8rem, 4vw, 2rem)'
+					align='center'
+					color='rgba(17, 17, 17, .6)'>
 					Or feel free to send me a message right here
 				</Typography>
 				<a
 					href='#contact-form'
-					style={{ pointerEvents: matches ? 'none' : 'auto' }}>
-					<IconButton disabled={matches} color='primary'>
+					style={{ pointerEvents: breakpoint === 'large' ? 'none' : 'auto' }}>
+					<IconButton disabled={breakpoint === 'large'} color='primary'>
 						<ArrowForwardIos
 							sx={{
 								fontSize: '4.0rem',
-								transform: `rotate(${matches ? 0 : 90}deg)`,
+								transform: `rotate(${breakpoint === 'large' ? 0 : 90}deg)`,
 							}}
 						/>
 					</IconButton>
@@ -248,8 +254,8 @@ export const Contact: React.FC = () => {
 					flexDirection: 'column',
 					justifyContent: 'space-evenly',
 					alignItems: 'center',
-					mt: matches ? 0 : 5,
-					ml: matches ? 5 : 0,
+					mt: breakpoint === 'large' ? 0 : 5,
+					ml: breakpoint === 'large' ? 5 : 0,
 				}}>
 				<Player
 					src={airplaneAnimation}

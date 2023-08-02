@@ -1,8 +1,7 @@
 import { Box, Button, Divider, Fade, Grow } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import * as React from 'react';
 import Typewriter from 'typewriter-effect';
+import { useBreakpoint } from '../BreakpointProvider';
 import images from '../assets/images';
 
 // TODO: this very quickly became spaghetti code
@@ -15,8 +14,7 @@ import images from '../assets/images';
 // would be eye catching
 
 export const Intro: React.FC = () => {
-	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
+	const breakpoint = useBreakpoint();
 
 	const [showSubtitle, setShowSubtitle] = React.useState(false);
 	const [showButtons, setShowButtons] = React.useState(false);
@@ -40,13 +38,13 @@ export const Intro: React.FC = () => {
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'center',
-					alignItems: matches ? 'flex-start' : 'center',
+					alignItems: breakpoint === 'large' ? 'flex-start' : 'center',
 					zIndex: 999,
-					textAlign: matches ? 'left' : 'center',
+					textAlign: breakpoint === 'large' ? 'left' : 'center',
 					pl: '10vw',
-					pr: matches ? '60vw' : '10vw',
-					pt: matches ? '20vh' : '25px',
-					pb: matches ? '10vh' : '125px',
+					pr: breakpoint === 'large' ? '60vw' : '10vw',
+					pt: breakpoint === 'large' ? '20vh' : '25px',
+					pb: breakpoint === 'large' ? '10vh' : '125px',
 				}}>
 				<div className='text title'>
 					<Typewriter
@@ -77,7 +75,7 @@ export const Intro: React.FC = () => {
 						and innovative <strong>Software Solutions</strong>
 					</p>
 				</Fade>
-				{!matches && (
+				{breakpoint !== 'large' && (
 					<Box sx={{ display: 'flex', mt: 7 }}>
 						<a href='#about'>
 							<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
@@ -86,8 +84,9 @@ export const Intro: React.FC = () => {
 									color='secondary'
 									sx={{
 										mr: 3,
+										size: breakpoint === 'mobile' ? 'small' : '',
 									}}>
-									about me
+									about
 								</Button>
 							</Grow>
 						</a>
@@ -101,8 +100,9 @@ export const Intro: React.FC = () => {
 									color='secondary'
 									sx={{
 										mr: 3,
+										size: breakpoint === 'mobile' ? 'small' : '',
 									}}>
-									my work
+									projects
 								</Button>
 							</Grow>
 						</a>
@@ -111,7 +111,10 @@ export const Intro: React.FC = () => {
 								in={showButtons}
 								style={{ transformOrigin: '0 0 0' }}
 								{...(showButtons ? { timeout: 3000 } : {})}>
-								<Button variant='contained' color='secondary'>
+								<Button
+									variant='contained'
+									color='secondary'
+									sx={{ size: breakpoint === 'mobile' ? 'small' : '' }}>
 									contact
 								</Button>
 							</Grow>
@@ -129,7 +132,7 @@ export const Intro: React.FC = () => {
 					justifyContent: 'center',
 					alignItems: 'center',
 				}}>
-				{matches && (
+				{breakpoint === 'large' && (
 					<Box
 						sx={{
 							display: 'flex',
@@ -194,8 +197,8 @@ export const Intro: React.FC = () => {
 				alt='Profile Picture'
 				style={{
 					position: 'absolute',
-					maxHeight: matches ? '95%' : '60%',
-					width: matches ? '80%' : '100%',
+					maxHeight: breakpoint === 'large' ? '95%' : '60%',
+					width: breakpoint === 'large' ? '80%' : '100%',
 					objectFit: 'contain',
 					zIndex: 10,
 					bottom: 0,

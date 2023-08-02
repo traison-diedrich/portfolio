@@ -12,10 +12,9 @@ import {
 	Slide,
 	Toolbar,
 	Typography,
-	useMediaQuery,
 	useScrollTrigger,
-	useTheme,
 } from '@mui/material';
+import { useBreakpoint } from '../BreakpointProvider';
 
 interface HideOnScrollProps {
 	trigger: boolean;
@@ -33,8 +32,7 @@ const HideOnScroll = ({ trigger, children }: HideOnScrollProps) => {
 export const AppHeader: React.FC = () => {
 	const trigger = useScrollTrigger();
 
-	const theme = useTheme();
-	const mobile = useMediaQuery(theme.breakpoints.down('sm'));
+	const breakpoint = useBreakpoint();
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -82,7 +80,7 @@ export const AppHeader: React.FC = () => {
 							}}>
 							TRAISON DIEDRICH
 						</Typography>
-						{mobile ? (
+						{breakpoint === 'mobile' ? (
 							<>
 								<IconButton onClick={toggleMenu} sx={{ marginLeft: 'auto' }}>
 									<MenuIcon sx={{ color: 'text.primary' }} />

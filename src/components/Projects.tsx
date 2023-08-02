@@ -8,6 +8,7 @@ import {
 	Typography,
 } from '@mui/material';
 import * as React from 'react';
+import { useBreakpoint } from '../BreakpointProvider';
 import icons from '../assets/icons';
 import images from '../assets/images';
 
@@ -69,8 +70,9 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 			variant='outlined'
 			sx={{
 				borderColor: 'background.default',
-				width: 400,
-				height: 420,
+				width: '80vw',
+				maxWidth: 400,
+				height: '100%',
 				transition: 'box-shadow 0.3s',
 				'&:hover': {
 					boxShadow: cardHovered
@@ -85,9 +87,9 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 				href={props.url}
 				target='_blank'
 				sx={{
-					height: '250px',
+					aspectRatio: 7 / 4,
 					width: '100%',
-					objectFit: 'fill',
+					objectFit: 'cover',
 					textDecoration: 'none',
 				}}
 				image={props.image}
@@ -111,7 +113,7 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 					</Box>
 				</Box>
 			</CardMedia>
-			<CardContent sx={{ height: 170 }}>
+			<CardContent>
 				<Box
 					sx={{
 						display: 'flex',
@@ -148,6 +150,8 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 // TODO: I think the background here should be a simple parallax
 // to keep things from being stale
 export const Projects: React.FC = () => {
+	const breakpoint = useBreakpoint();
+
 	return (
 		<Box
 			id='projects'
@@ -157,10 +161,13 @@ export const Projects: React.FC = () => {
 				flexDirection: 'column',
 				justifyContent: 'center',
 				alignItems: 'center',
-				p: 5,
+				py: 5,
+				px: breakpoint === 'mobile' ? 0 : 5,
 				backgroundImage: 'linear-gradient(to bottom, #111111 30%, #eeeeee 70%)',
 			}}>
-			<Typography variant='h2' color='secondary' sx={{ mb: 4 }}>
+			<Typography
+				color='secondary'
+				sx={{ fontSize: 'clamp(1rem, 10vw, 4rem)', mb: 4 }}>
 				Recent Projects
 			</Typography>
 			{/* TODO: Long term I would like to be able to implement a slide-in 

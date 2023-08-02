@@ -1,6 +1,7 @@
 import { Box, Container, CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
+import { BreakpointProvider } from './BreakpointProvider';
 import { About } from './components/About';
 import { AppFooter } from './components/AppFooter';
 import { AppHeader } from './components/AppHeader';
@@ -38,24 +39,26 @@ function App() {
 		<React.Fragment>
 			<CssBaseline>
 				<ThemeProvider theme={theme}>
-					<Container
-						maxWidth={false}
-						disableGutters
-						sx={{ bgcolor: 'background.default' }}>
-						<AppHeader />
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'center',
-							}}>
-							<Intro />
-							<About />
-							<Projects />
-							<Contact />
-							<AppFooter />
-						</Box>
-					</Container>
+					<BreakpointProvider>
+						<Container
+							maxWidth={false}
+							disableGutters
+							sx={{ bgcolor: 'background.default' }}>
+							<AppHeader />
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'column',
+									alignItems: 'center',
+								}}>
+								<Intro />
+								<About />
+								<Projects />
+								<Contact />
+								<AppFooter />
+							</Box>
+						</Container>
+					</BreakpointProvider>
 				</ThemeProvider>
 			</CssBaseline>
 		</React.Fragment>
