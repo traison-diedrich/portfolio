@@ -2,6 +2,7 @@ import { Box, Container, CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { About } from './components/About';
+import { AppFooter } from './components/AppFooter';
 import { AppHeader } from './components/AppHeader';
 import { Contact } from './components/Contact';
 import { Intro } from './components/Intro';
@@ -52,6 +53,7 @@ function App() {
 							<About />
 							<Projects />
 							<Contact />
+							<AppFooter />
 						</Box>
 					</Container>
 				</ThemeProvider>
