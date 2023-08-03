@@ -17,6 +17,15 @@ interface MyBoxProps extends BoxProps {
 	sliderPosition?: number;
 }
 
+/**
+ * TODO:
+ * [ ] : link to github
+ * [ ] : link to serve resume
+ * [ ] : frontend skills
+ * [ ] : backend skills
+ * [ ] : other skills
+ */
+
 const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 	return (
 		<Box
@@ -32,11 +41,42 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 				overflow: 'hidden',
 				position: 'absolute',
 			}}>
-			<Typography variant='h2' color='secondary' align='center'>
-				As a Developer
-			</Typography>
-			<Box sx={{ height: '300px', aspectRatio: 1, bgcolor: 'secondary.main' }}>
-				Content!
+			<Box
+				sx={{
+					position: 'relative',
+					width: '100%',
+					height: '100%',
+					display: 'grid',
+					placeItems: 'center',
+				}}>
+				<Box
+					sx={{
+						display: 'grid',
+						placeItems: 'center',
+						gap: '1rem',
+						position: 'absolute',
+						top: 0,
+					}}>
+					<Typography
+						variant='h4'
+						align='center'
+						sx={{ color: 'text.primary' }}>
+						As a Developer
+					</Typography>
+					<Typography
+						variant='subtitle1'
+						align='center'
+						sx={{ color: 'text.secondary' }}>
+						My life and interests outside of coding
+					</Typography>
+				</Box>
+				<Box
+					sx={{
+						width: '100%',
+						aspectRatio: 4 / 5,
+						bgcolor: 'secondary.main',
+						borderRadius: '5px',
+					}}></Box>
 			</Box>
 		</Box>
 	);
@@ -404,7 +444,7 @@ export const About: React.FC = () => {
 				sx={{
 					bgcolor: 'background.default',
 					pl: '20%',
-					pr: breakpoint === 'mobile' && isLeft ? '10%' : '20%',
+					pr: '10%',
 					py: '50px',
 					transition: 'padding 0.9s ease',
 				}}

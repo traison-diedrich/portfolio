@@ -43,7 +43,7 @@ export const Intro: React.FC = () => {
 					textAlign: breakpoint === 'large' ? 'left' : 'center',
 					pl: '10vw',
 					pr: breakpoint === 'large' ? '60vw' : '10vw',
-					pt: breakpoint === 'large' ? '20vh' : '25px',
+					pt: breakpoint === 'large' ? '20vh' : '100px',
 					pb: breakpoint === 'large' ? '10vh' : '125px',
 				}}>
 				<div className='text title'>
@@ -76,15 +76,22 @@ export const Intro: React.FC = () => {
 					</p>
 				</Fade>
 				{breakpoint !== 'large' && (
-					<Box sx={{ display: 'flex', mt: 7 }}>
+					<Box
+						sx={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							justifyContent: 'center',
+							gap: '1rem',
+							mt: 7,
+						}}>
 						<a href='#about'>
 							<Grow in={showButtons} style={{ transformOrigin: '0 0 0' }}>
 								<Button
 									variant='contained'
 									color='secondary'
 									sx={{
-										mr: 3,
 										size: breakpoint === 'mobile' ? 'small' : '',
+										width: '6rem',
 									}}>
 									about
 								</Button>
@@ -99,8 +106,8 @@ export const Intro: React.FC = () => {
 									variant='contained'
 									color='secondary'
 									sx={{
-										mr: 3,
 										size: breakpoint === 'mobile' ? 'small' : '',
+										width: '6rem',
 									}}>
 									projects
 								</Button>
@@ -114,7 +121,10 @@ export const Intro: React.FC = () => {
 								<Button
 									variant='contained'
 									color='secondary'
-									sx={{ size: breakpoint === 'mobile' ? 'small' : '' }}>
+									sx={{
+										size: breakpoint === 'mobile' ? 'small' : '',
+										width: '6rem',
+									}}>
 									contact
 								</Button>
 							</Grow>
