@@ -59,6 +59,9 @@ interface CardProps {
 }
 
 const ProjectCard: React.FC<CardProps> = (props) => {
+	const breakpoint = useBreakpoint();
+	const mobile = breakpoint === 'mobile';
+
 	const [cardHovered, setCardHovered] = React.useState(false);
 	const [imgHovered, setImgHovered] = React.useState(false);
 
@@ -121,16 +124,18 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 						flexDirection: 'column',
 						justifyContent: 'space-between',
 					}}>
-					<Box display='flex'>
-						<Typography variant='h4' color='primary'>
+					<Box
+						display='flex'
+						sx={{ flexDirection: mobile ? 'column' : 'row', gap: '.5rem' }}>
+						<Typography fontSize='clamp(1rem, 8vw, 2rem)' color='primary'>
 							{props.title}
 						</Typography>
 						<Box
 							sx={{
 								display: 'flex',
-								marginLeft: 'auto',
+								marginLeft: mobile ? '' : 'auto',
 								gap: '.5rem',
-								justifyContent: 'center',
+								justifyContent: mobile ? 'flex-start' : 'center',
 								alignItems: 'flex-start',
 							}}>
 							{props.icons.map((iconName, index) => (

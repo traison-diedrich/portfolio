@@ -48,6 +48,7 @@ export const AppFooter: React.FC = () => {
 			}}>
 			<Typography
 				color='text.primary'
+				align='center'
 				sx={{ fontSize: 'clamp(1rem, 3.5vw, 2.0rem)' }}>
 				Enjoying the site? Check out the source at{' '}
 				<a
@@ -81,6 +82,7 @@ export const AppFooter: React.FC = () => {
 				}}>
 				<Typography
 					color='inherit'
+					align='center'
 					sx={{ fontSize: 'clamp(.75rem, 2.5vw, 1.5rem)' }}>
 					&copy; Traison Diedrich 2023 | Made with{' '}
 					<FavoriteOutlined sx={{ fontSize: 'inherit' }} /> in Saint Louis
@@ -89,6 +91,7 @@ export const AppFooter: React.FC = () => {
 					href='#intro'
 					style={{ textDecoration: 'underline', color: 'inherit' }}>
 					<Typography
+						align='center'
 						color='inherit'
 						sx={{ fontSize: 'clamp(.75rem, 2.5vw, 1.5rem)' }}>
 						Back to Top

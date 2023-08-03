@@ -15,10 +15,9 @@ import images from '../assets/images';
 
 interface MyBoxProps extends BoxProps {
 	sliderPosition?: number;
-	matches: boolean;
 }
 
-const Professional: React.FC<MyBoxProps> = ({ matches, ...props }) => {
+const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 	return (
 		<Box
 			id='right'
@@ -27,7 +26,7 @@ const Professional: React.FC<MyBoxProps> = ({ matches, ...props }) => {
 				height: '100%',
 				width: '100%',
 				display: 'flex',
-				flexDirection: matches ? 'row' : 'column',
+				flexDirection: 'column',
 				justifyContent: 'center',
 				alignItems: 'center',
 				overflow: 'hidden',
@@ -99,15 +98,12 @@ interface CarouselProps {
 	images1: string[];
 	images2: string[];
 	captions: string[];
-	matches: boolean;
 }
 
-const Carousel: React.FC<CarouselProps> = ({
-	images1,
-	images2,
-	captions,
-	matches,
-}) => {
+const Carousel: React.FC<CarouselProps> = ({ images1, images2, captions }) => {
+	const breakpoint = useBreakpoint();
+	const matches = breakpoint === 'large';
+
 	const [curr, setCurr] = React.useState(0);
 
 	const prev = () => {
@@ -122,7 +118,7 @@ const Carousel: React.FC<CarouselProps> = ({
 		<Box
 			sx={{
 				width: '100%',
-				maxWidth: matches ? '1100px' : '450px',
+				maxWidth: breakpoint === 'large' ? '1100px' : '450px',
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'space-around',
@@ -157,13 +153,31 @@ const Carousel: React.FC<CarouselProps> = ({
 			<IconButton
 				color='secondary'
 				onClick={prev}
-				sx={{ position: 'absolute', top: '38%', left: matches ? '4%' : 0 }}>
+				sx={{
+					position: 'absolute',
+					top: '38%',
+					left: matches ? '4%' : 0,
+					boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+					backgroundColor: 'rgba(13, 13, 13, 0.3)',
+					'&:hover': {
+						backgroundColor: 'rgba(13, 13, 13, 0.5)',
+					},
+				}}>
 				<ChevronLeft sx={{ fontSize: '2.2rem' }} />
 			</IconButton>
 			<IconButton
 				color='secondary'
 				onClick={next}
-				sx={{ position: 'absolute', top: '38%', right: matches ? '4%' : 0 }}>
+				sx={{
+					position: 'absolute',
+					top: '38%',
+					right: matches ? '4%' : 0,
+					boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+					backgroundColor: 'rgba(13, 13, 13, 0.3)',
+					'&:hover': {
+						backgroundColor: 'rgba(13, 13, 13, 0.5)',
+					},
+				}}>
 				<ChevronRight sx={{ fontSize: '2.2rem' }} />
 			</IconButton>
 			<Typography
@@ -172,7 +186,12 @@ const Carousel: React.FC<CarouselProps> = ({
 				align='center'
 				sx={{
 					width: matches ? '55%' : '90%',
-					height: matches ? '45px' : '65px',
+					height:
+						breakpoint === 'large'
+							? '60px'
+							: breakpoint === 'small'
+							? '70px'
+							: '90px',
 				}}>
 				{captions[curr]}
 			</Typography>
@@ -196,11 +215,7 @@ const Carousel: React.FC<CarouselProps> = ({
 	);
 };
 
-const Personal: React.FC<MyBoxProps> = ({
-	sliderPosition,
-	matches,
-	...props
-}) => {
+const Personal: React.FC<MyBoxProps> = ({ sliderPosition, ...props }) => {
 	const PrimaryImages: string[] = [
 		images.graduation1,
 		images.bodybuilding1,
@@ -217,6 +232,8 @@ const Personal: React.FC<MyBoxProps> = ({
 		images.nature2,
 	];
 
+	// for now, if one of these captions changes, the height of the captions
+	// in the carousel also needs to change
 	const captions: string[] = [
 		'I recently graduated from Saint Louis University with my Bachelor of Arts in Computer Science.',
 		'Bodybuilding is what inspired my most recent app, Workout Planner. Combining fitness and technology is what I do.',
@@ -268,7 +285,6 @@ const Personal: React.FC<MyBoxProps> = ({
 					images1={PrimaryImages}
 					images2={SecondaryImages}
 					captions={captions}
-					matches={matches}
 				/>
 			</Box>
 		</Box>
@@ -376,7 +392,6 @@ export const About: React.FC = () => {
 				overflow: 'hidden',
 			}}>
 			<Personal
-				matches={breakpoint === 'large'}
 				sliderPosition={sliderPosition}
 				sx={{
 					bgcolor: 'secondary.main',
@@ -386,7 +401,6 @@ export const About: React.FC = () => {
 				}}
 			/>
 			<Professional
-				matches={breakpoint === 'large'}
 				sx={{
 					bgcolor: 'background.default',
 					pl: '20%',
