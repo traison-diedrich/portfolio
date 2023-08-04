@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import WebIcon from '@mui/icons-material/Web';
 import {
 	Box,
 	BoxProps,
@@ -26,6 +27,77 @@ interface MyBoxProps extends BoxProps {
  * [ ] : other skills
  */
 
+const SkillsCard: React.FC = () => {
+	const [hovered, setHovered] = React.useState(false);
+
+	return (
+		<Box
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
+			sx={{
+				width: '100%',
+				maxWidth: '450px',
+				aspectRatio: hovered ? 2 / 3 : 3 / 2,
+				bgcolor: 'secondary.main',
+				borderRadius: '5px',
+				position: 'relative',
+				transition: 'aspect-ratio 0.9s ease-out',
+			}}>
+			<Box
+				sx={{
+					width: '50%',
+					aspectRatio: 1,
+					position: 'absolute',
+					top: hovered ? '5%' : '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+					transition: 'top 0.9s ease-out',
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+					bgcolor: 'secondary.main',
+					borderRadius: '50%',
+				}}>
+				<WebIcon
+					sx={{
+						fontSize: 'clamp(2rem, 25vw, 6rem)',
+					}}
+				/>
+				<Typography variant='h5' align='center' whiteSpace='nowrap'>
+					Frontend
+				</Typography>
+			</Box>
+			<Box
+				sx={{
+					position: 'absolute',
+					top: '18%',
+					left: 0,
+					width: hovered ? '100%' : 0,
+					height: '8px',
+					bgcolor: 'background.default',
+					transition: hovered ? 'width 1.3s ease-in' : '',
+				}}
+			/>
+			<Box
+				component='ul'
+				sx={{
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+					opacity: hovered ? 1 : 0,
+					transition: 'opacity 0.2s ease',
+					transitionDelay: hovered ? '1.3s' : '0s',
+				}}>
+				<li>Test</li>
+				<li>Test</li>
+				<li>Test</li>
+			</Box>
+		</Box>
+	);
+};
+
 const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 	return (
 		<Box
@@ -48,6 +120,7 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 					height: '100%',
 					display: 'grid',
 					placeItems: 'center',
+					pt: '15vh',
 				}}>
 				<Box
 					sx={{
@@ -67,16 +140,10 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 						variant='subtitle1'
 						align='center'
 						sx={{ color: 'text.secondary' }}>
-						My life and interests outside of coding
+						My technical skills and capabilities
 					</Typography>
 				</Box>
-				<Box
-					sx={{
-						width: '100%',
-						aspectRatio: 4 / 5,
-						bgcolor: 'secondary.main',
-						borderRadius: '5px',
-					}}></Box>
+				<SkillsCard />
 			</Box>
 		</Box>
 	);

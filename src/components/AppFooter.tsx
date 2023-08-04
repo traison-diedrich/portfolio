@@ -53,6 +53,7 @@ export const AppFooter: React.FC = () => {
 				Enjoying the site? Check out the source at{' '}
 				<a
 					href='https://github.com/traison-diedrich/portfolio'
+					target='_blank'
 					style={{ color: 'inherit', textDecoration: 'underline' }}>
 					Github
 				</a>

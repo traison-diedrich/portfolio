@@ -43,7 +43,12 @@ export const Intro: React.FC = () => {
 					textAlign: breakpoint === 'large' ? 'left' : 'center',
 					pl: '10vw',
 					pr: breakpoint === 'large' ? '60vw' : '10vw',
-					pt: breakpoint === 'large' ? '20vh' : '100px',
+					pt:
+						breakpoint === 'large'
+							? '20vh'
+							: breakpoint === 'small'
+							? '10px'
+							: '100px',
 					pb: breakpoint === 'large' ? '10vh' : '125px',
 				}}>
 				<div className='text title'>
