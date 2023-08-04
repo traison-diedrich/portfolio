@@ -1,6 +1,8 @@
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import ConstructionIcon from '@mui/icons-material/Construction';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import StorageIcon from '@mui/icons-material/Storage';
 import WebIcon from '@mui/icons-material/Web';
 import {
 	Box,
@@ -27,78 +29,124 @@ interface MyBoxProps extends BoxProps {
  * [ ] : other skills
  */
 
-const SkillsCard: React.FC = () => {
+interface SkillCardProps extends BoxProps {
+	title: string;
+	Icon: React.ElementType;
+}
+
+const SkillCard: React.FC<SkillCardProps> = ({ title, Icon, ...props }) => {
 	const [hovered, setHovered] = React.useState(false);
 
 	return (
 		<Box
-			onMouseEnter={() => setHovered(true)}
-			onMouseLeave={() => setHovered(false)}
-			sx={{
+			{...props}
+			style={{
 				width: '100%',
 				maxWidth: '450px',
-				aspectRatio: hovered ? 2 / 3 : 3 / 2,
-				bgcolor: 'secondary.main',
-				borderRadius: '5px',
-				position: 'relative',
-				transition: 'aspect-ratio 0.9s ease-out',
+				overflow: 'hidden',
+				zIndex: hovered ? 999 : 0,
+				position: 'absolute',
+				transform: hovered ? 'translate(-50%, 0)' : 'translate(-50%, -50%)',
+				top: hovered ? '10%' : '',
+				left: '50%',
+				transition: 'all 0.9s ease',
 			}}>
 			<Box
+				onMouseEnter={() => setHovered(true)}
+				onMouseLeave={() => setHovered(false)}
 				sx={{
-					width: '50%',
-					aspectRatio: 1,
-					position: 'absolute',
-					top: hovered ? '5%' : '50%',
-					left: '50%',
-					transform: 'translate(-50%, -50%)',
-					transition: 'top 0.9s ease-out',
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'center',
-					alignItems: 'center',
+					width: '100%',
+					aspectRatio: hovered ? 2 / 3 : 3 / 2,
 					bgcolor: 'secondary.main',
-					borderRadius: '50%',
+					borderRadius: '5px',
+					position: 'relative',
+					transition: 'aspect-ratio 0.9s ease-out',
 				}}>
-				<WebIcon
+				<Box
 					sx={{
-						fontSize: 'clamp(2rem, 25vw, 6rem)',
+						width: '50%',
+						aspectRatio: 1,
+						position: 'absolute',
+						top: hovered ? '5%' : '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						transition: 'top 0.9s ease-out',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center',
+						bgcolor: 'secondary.main',
+						borderRadius: '50%',
+					}}>
+					<Icon
+						sx={{
+							fontSize: 'clamp(2rem, 25vw, 6rem)',
+						}}
+					/>
+					<Typography variant='h5' align='center' whiteSpace='nowrap'>
+						{title}
+					</Typography>
+				</Box>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '18%',
+						left: 0,
+						width: hovered ? '100%' : 0,
+						height: '8px',
+						bgcolor: 'background.default',
+						transition: hovered ? 'width 1.3s ease-in' : '',
 					}}
 				/>
-				<Typography variant='h5' align='center' whiteSpace='nowrap'>
-					Frontend
-				</Typography>
-			</Box>
-			<Box
-				sx={{
-					position: 'absolute',
-					top: '18%',
-					left: 0,
-					width: hovered ? '100%' : 0,
-					height: '8px',
-					bgcolor: 'background.default',
-					transition: hovered ? 'width 1.3s ease-in' : '',
-				}}
-			/>
-			<Box
-				component='ul'
-				sx={{
-					position: 'absolute',
-					top: '50%',
-					left: '50%',
-					transform: 'translate(-50%, -50%)',
-					opacity: hovered ? 1 : 0,
-					transition: 'opacity 0.2s ease',
-					transitionDelay: hovered ? '1.3s' : '0s',
-				}}>
-				<li>Test</li>
-				<li>Test</li>
-				<li>Test</li>
+				<Box
+					component='ul'
+					sx={{
+						position: 'absolute',
+						top: hovered ? '50%' : '100%',
+						left: '50%',
+						transform: hovered ? 'translate(-50%, -50%)' : 'translate(-50%, 0)',
+						transition: 'all 0.9s ease-out',
+					}}>
+					<li>Test</li>
+					<li>Test</li>
+					<li>Test</li>
+				</Box>
 			</Box>
 		</Box>
 	);
 };
 
+// TODO: cards should expand to 100% of height to new container rather than
+// using aspect ratio to keep things in size
+
 const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
+	const FrontendCardProps: SkillCardProps = {
+		title: 'Frontend',
+		Icon: WebIcon,
+		sx: {
+			pt: '80px',
+			top: '25%',
+		},
+	};
+
+	const BackendCardProps: SkillCardProps = {
+		title: 'Backend',
+		Icon: StorageIcon,
+		sx: {
+			pt: '80px',
+			top: '50%',
+		},
+	};
+
+	const OtherCardProps: SkillCardProps = {
+		title: 'Other',
+		Icon: ConstructionIcon,
+		sx: {
+			pt: '80px',
+			top: '75%',
+		},
+	};
+
 	return (
 		<Box
 			id='right'
@@ -106,10 +154,6 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 			style={{
 				height: '100%',
 				width: '100%',
-				display: 'flex',
-				flexDirection: 'column',
-				justifyContent: 'center',
-				alignItems: 'center',
 				overflow: 'hidden',
 				position: 'absolute',
 			}}>
@@ -118,9 +162,6 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 					position: 'relative',
 					width: '100%',
 					height: '100%',
-					display: 'grid',
-					placeItems: 'center',
-					pt: '15vh',
 				}}>
 				<Box
 					sx={{
@@ -129,6 +170,7 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 						gap: '1rem',
 						position: 'absolute',
 						top: 0,
+						width: '100%',
 					}}>
 					<Typography
 						variant='h4'
@@ -143,7 +185,9 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 						My technical skills and capabilities
 					</Typography>
 				</Box>
-				<SkillsCard />
+				<SkillCard {...FrontendCardProps} />
+				<SkillCard {...BackendCardProps} />
+				<SkillCard {...OtherCardProps} />
 			</Box>
 		</Box>
 	);
