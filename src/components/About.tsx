@@ -39,81 +39,102 @@ const SkillCard: React.FC<SkillCardProps> = ({ title, Icon, ...props }) => {
 
 	return (
 		<Box
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
 			{...props}
 			style={{
+				height: hovered ? '100%' : '30%',
 				width: '100%',
-				maxWidth: '450px',
-				overflow: 'hidden',
-				zIndex: hovered ? 999 : 0,
+				border: '2px solid red',
 				position: 'absolute',
-				transform: hovered ? 'translate(-50%, 0)' : 'translate(-50%, -50%)',
-				top: hovered ? '10%' : '',
+				top: hovered ? '2%' : '',
 				left: '50%',
+				transform: 'translateX(-50%)',
 				transition: 'all 0.9s ease',
+				zIndex: hovered ? 999 : 0,
 			}}>
-			<Box
-				onMouseEnter={() => setHovered(true)}
-				onMouseLeave={() => setHovered(false)}
-				sx={{
-					width: '100%',
-					aspectRatio: hovered ? 2 / 3 : 3 / 2,
-					bgcolor: 'secondary.main',
-					borderRadius: '5px',
-					position: 'relative',
-					transition: 'aspect-ratio 0.9s ease-out',
-				}}>
-				<Box
-					sx={{
-						width: '50%',
-						aspectRatio: 1,
-						position: 'absolute',
-						top: hovered ? '5%' : '50%',
-						left: '50%',
-						transform: 'translate(-50%, -50%)',
-						transition: 'top 0.9s ease-out',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
-						bgcolor: 'secondary.main',
-						borderRadius: '50%',
-					}}>
-					<Icon
-						sx={{
-							fontSize: 'clamp(2rem, 25vw, 6rem)',
-						}}
-					/>
-					<Typography variant='h5' align='center' whiteSpace='nowrap'>
-						{title}
-					</Typography>
-				</Box>
-				<Box
-					sx={{
-						position: 'absolute',
-						top: '18%',
-						left: 0,
-						width: hovered ? '100%' : 0,
-						height: '8px',
-						bgcolor: 'background.default',
-						transition: hovered ? 'width 1.3s ease-in' : '',
-					}}
-				/>
-				<Box
-					component='ul'
-					sx={{
-						position: 'absolute',
-						top: hovered ? '50%' : '100%',
-						left: '50%',
-						transform: hovered ? 'translate(-50%, -50%)' : 'translate(-50%, 0)',
-						transition: 'all 0.9s ease-out',
-					}}>
-					<li>Test</li>
-					<li>Test</li>
-					<li>Test</li>
-				</Box>
-			</Box>
+			<Typography color='secondary'>{title}</Typography>
 		</Box>
 	);
+
+	// return (
+	// 	<Box
+	// 		{...props}
+	// 		style={{
+	// 			height: '100%',
+	// 			width: '100%',
+	// 			maxWidth: '450px',
+	// 			overflow: 'hidden',
+	// 			transition: 'all 0.9s ease',
+	// 			display: 'grid',
+	// 			placeItems: 'center',
+	// 			flex: hovered ? '1 0 100%' : '0 1 35%',
+	// 			paddingTop: '80px',
+	// 			marginBottom: hovered ? '80px' : '0',
+	// 		}}>
+	// 		<Box
+	// 			onMouseEnter={() => setHovered(true)}
+	// 			onMouseLeave={() => setHovered(false)}
+	// 			sx={{
+	// 				height: '100%',
+	// 				aspectRatio: 3 / 2,
+	// 				bgcolor: 'secondary.main',
+	// 				borderRadius: '5px',
+	// 				position: 'relative',
+	// 				transition: 'all 0.9s ease-out',
+	// 			}}>
+	// 			<Box
+	// 				sx={{
+	// 					width: '50%',
+	// 					aspectRatio: 1,
+	// 					position: 'absolute',
+	// 					top: hovered ? '5%' : '50%',
+	// 					left: '50%',
+	// 					transform: 'translate(-50%, -50%)',
+	// 					transition: 'top 0.9s ease-out',
+	// 					display: 'flex',
+	// 					flexDirection: 'column',
+	// 					justifyContent: 'center',
+	// 					alignItems: 'center',
+	// 					bgcolor: 'secondary.main',
+	// 					borderRadius: '50%',
+	// 				}}>
+	// 				<Icon
+	// 					sx={{
+	// 						fontSize: '5rem',
+	// 					}}
+	// 				/>
+	// 				<Typography variant='h5' align='center' whiteSpace='nowrap'>
+	// 					{title}
+	// 				</Typography>
+	// 			</Box>
+	// 			<Box
+	// 				sx={{
+	// 					position: 'absolute',
+	// 					top: '18%',
+	// 					left: 0,
+	// 					width: hovered ? '100%' : 0,
+	// 					height: '8px',
+	// 					bgcolor: 'background.default',
+	// 					transition: hovered ? 'width 1.3s ease-in' : '',
+	// 				}}
+	// 			/>
+	// 			<Box
+	// 				component='ul'
+	// 				sx={{
+	// 					position: 'absolute',
+	// 					top: hovered ? '50%' : '100%',
+	// 					left: '50%',
+	// 					transform: hovered ? 'translate(-50%, -50%)' : 'translate(-50%, 0)',
+	// 					transition: 'all 0.9s ease-out',
+	// 				}}>
+	// 				<li>Test</li>
+	// 				<li>Test</li>
+	// 				<li>Test</li>
+	// 			</Box>
+	// 		</Box>
+	// 	</Box>
+	// );
 };
 
 // TODO: cards should expand to 100% of height to new container rather than
@@ -124,8 +145,7 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 		title: 'Frontend',
 		Icon: WebIcon,
 		sx: {
-			pt: '80px',
-			top: '25%',
+			top: '2%',
 		},
 	};
 
@@ -133,8 +153,7 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 		title: 'Backend',
 		Icon: StorageIcon,
 		sx: {
-			pt: '80px',
-			top: '50%',
+			top: '35%',
 		},
 	};
 
@@ -142,8 +161,7 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 		title: 'Other',
 		Icon: ConstructionIcon,
 		sx: {
-			pt: '80px',
-			top: '75%',
+			top: '68%',
 		},
 	};
 
@@ -156,35 +174,34 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 				width: '100%',
 				overflow: 'hidden',
 				position: 'absolute',
+				display: 'flex',
+				flexDirection: 'column',
 			}}>
 			<Box
 				sx={{
-					position: 'relative',
+					display: 'grid',
+					placeItems: 'center',
+					gap: '1rem',
+					width: '100%',
+				}}>
+				<Typography variant='h4' align='center' sx={{ color: 'text.primary' }}>
+					As a Developer
+				</Typography>
+				<Typography
+					variant='subtitle1'
+					align='center'
+					sx={{ color: 'text.secondary' }}>
+					My technical skills and capabilities
+				</Typography>
+			</Box>
+			<Box
+				sx={{
 					width: '100%',
 					height: '100%',
+					position: 'relative',
+					border: '2px solid white',
+					p: 1,
 				}}>
-				<Box
-					sx={{
-						display: 'grid',
-						placeItems: 'center',
-						gap: '1rem',
-						position: 'absolute',
-						top: 0,
-						width: '100%',
-					}}>
-					<Typography
-						variant='h4'
-						align='center'
-						sx={{ color: 'text.primary' }}>
-						As a Developer
-					</Typography>
-					<Typography
-						variant='subtitle1'
-						align='center'
-						sx={{ color: 'text.secondary' }}>
-						My technical skills and capabilities
-					</Typography>
-				</Box>
 				<SkillCard {...FrontendCardProps} />
 				<SkillCard {...BackendCardProps} />
 				<SkillCard {...OtherCardProps} />
