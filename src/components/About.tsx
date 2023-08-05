@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, WifiCalling } from '@mui/icons-material';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -34,118 +34,98 @@ interface SkillCardProps extends BoxProps {
 	Icon: React.ElementType;
 }
 
+// FIXME: hovering, not hovering and going back to hovering very quickly
+// causes the hard to increase in size over and over
 const SkillCard: React.FC<SkillCardProps> = ({ title, Icon, ...props }) => {
 	const [hovered, setHovered] = React.useState(false);
+	const cardRef = React.useRef<HTMLElement | null>(null);
+
+	React.useEffect(() => {
+		if (cardRef.current && !hovered) {
+			const parentHeight = cardRef.current.parentElement?.clientHeight;
+			const height = 0.33 * parentHeight!;
+			cardRef.current.style.width = `${1.25 * height}px`;
+		} else if (cardRef.current) {
+			cardRef.current.style.width = '100%';
+		}
+	}, [hovered]);
 
 	return (
 		<Box
-			onMouseEnter={() => setHovered(true)}
-			onMouseLeave={() => setHovered(false)}
 			{...props}
+			ref={cardRef}
 			style={{
-				height: hovered ? '100%' : '30%',
+				height: hovered ? '100%' : '33%',
 				width: '100%',
-				border: '2px solid red',
+				maxWidth: '500px',
 				position: 'absolute',
-				top: hovered ? '2%' : '',
+				top: hovered ? 0 : '',
 				left: '50%',
 				transform: 'translateX(-50%)',
 				transition: 'all 0.9s ease',
 				zIndex: hovered ? 999 : 0,
+				paddingTop: '80px',
 			}}>
-			<Typography color='secondary'>{title}</Typography>
+			<Box
+				onMouseEnter={() => setHovered(true)}
+				onMouseLeave={() => setHovered(false)}
+				sx={{
+					width: '100%',
+					height: '100%',
+					bgcolor: 'secondary.main',
+					display: 'grid',
+					placeItems: 'center',
+					transition: 'all 0.9s ease',
+					borderRadius: '5px',
+					position: 'relative',
+				}}>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '18%',
+						left: 0,
+						width: hovered ? '100%' : 0,
+						height: '8px',
+						bgcolor: 'background.default',
+						transition: hovered ? 'width 1.4s ease-in' : '',
+					}}
+				/>
+				<Box
+					sx={{
+						width: '50%',
+						aspectRatio: 1,
+						position: 'absolute',
+						top: hovered ? '5%' : '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						transition: 'top 0.9s ease-out',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center',
+						bgcolor: 'secondary.main',
+						borderRadius: '50%',
+					}}>
+					<Icon
+						sx={{
+							fontSize: '4rem',
+						}}
+					/>
+					<Typography variant='h5' align='center' whiteSpace='nowrap'>
+						{title}
+					</Typography>
+				</Box>
+			</Box>
 		</Box>
 	);
-
-	// return (
-	// 	<Box
-	// 		{...props}
-	// 		style={{
-	// 			height: '100%',
-	// 			width: '100%',
-	// 			maxWidth: '450px',
-	// 			overflow: 'hidden',
-	// 			transition: 'all 0.9s ease',
-	// 			display: 'grid',
-	// 			placeItems: 'center',
-	// 			flex: hovered ? '1 0 100%' : '0 1 35%',
-	// 			paddingTop: '80px',
-	// 			marginBottom: hovered ? '80px' : '0',
-	// 		}}>
-	// 		<Box
-	// 			onMouseEnter={() => setHovered(true)}
-	// 			onMouseLeave={() => setHovered(false)}
-	// 			sx={{
-	// 				height: '100%',
-	// 				aspectRatio: 3 / 2,
-	// 				bgcolor: 'secondary.main',
-	// 				borderRadius: '5px',
-	// 				position: 'relative',
-	// 				transition: 'all 0.9s ease-out',
-	// 			}}>
-	// 			<Box
-	// 				sx={{
-	// 					width: '50%',
-	// 					aspectRatio: 1,
-	// 					position: 'absolute',
-	// 					top: hovered ? '5%' : '50%',
-	// 					left: '50%',
-	// 					transform: 'translate(-50%, -50%)',
-	// 					transition: 'top 0.9s ease-out',
-	// 					display: 'flex',
-	// 					flexDirection: 'column',
-	// 					justifyContent: 'center',
-	// 					alignItems: 'center',
-	// 					bgcolor: 'secondary.main',
-	// 					borderRadius: '50%',
-	// 				}}>
-	// 				<Icon
-	// 					sx={{
-	// 						fontSize: '5rem',
-	// 					}}
-	// 				/>
-	// 				<Typography variant='h5' align='center' whiteSpace='nowrap'>
-	// 					{title}
-	// 				</Typography>
-	// 			</Box>
-	// 			<Box
-	// 				sx={{
-	// 					position: 'absolute',
-	// 					top: '18%',
-	// 					left: 0,
-	// 					width: hovered ? '100%' : 0,
-	// 					height: '8px',
-	// 					bgcolor: 'background.default',
-	// 					transition: hovered ? 'width 1.3s ease-in' : '',
-	// 				}}
-	// 			/>
-	// 			<Box
-	// 				component='ul'
-	// 				sx={{
-	// 					position: 'absolute',
-	// 					top: hovered ? '50%' : '100%',
-	// 					left: '50%',
-	// 					transform: hovered ? 'translate(-50%, -50%)' : 'translate(-50%, 0)',
-	// 					transition: 'all 0.9s ease-out',
-	// 				}}>
-	// 				<li>Test</li>
-	// 				<li>Test</li>
-	// 				<li>Test</li>
-	// 			</Box>
-	// 		</Box>
-	// 	</Box>
-	// );
 };
-
-// TODO: cards should expand to 100% of height to new container rather than
-// using aspect ratio to keep things in size
 
 const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 	const FrontendCardProps: SkillCardProps = {
 		title: 'Frontend',
 		Icon: WebIcon,
 		sx: {
-			top: '2%',
+			top: 0,
 		},
 	};
 
@@ -153,7 +133,7 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 		title: 'Backend',
 		Icon: StorageIcon,
 		sx: {
-			top: '35%',
+			top: '33%',
 		},
 	};
 
@@ -161,7 +141,7 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 		title: 'Other',
 		Icon: ConstructionIcon,
 		sx: {
-			top: '68%',
+			top: '66%',
 		},
 	};
 
@@ -187,20 +167,12 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 				<Typography variant='h4' align='center' sx={{ color: 'text.primary' }}>
 					As a Developer
 				</Typography>
-				<Typography
-					variant='subtitle1'
-					align='center'
-					sx={{ color: 'text.secondary' }}>
-					My technical skills and capabilities
-				</Typography>
 			</Box>
 			<Box
 				sx={{
 					width: '100%',
 					height: '100%',
 					position: 'relative',
-					border: '2px solid white',
-					p: 1,
 				}}>
 				<SkillCard {...FrontendCardProps} />
 				<SkillCard {...BackendCardProps} />
