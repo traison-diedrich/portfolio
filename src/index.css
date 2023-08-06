@@ -24,14 +24,18 @@
 	color: rgba(238, 238, 238, 0.6);
 }
 
-.a {
-	text-decoration: none;
-}
-
 html {
 	scroll-behavior: smooth;
 }
 
-/* .scroll-target {
-	scroll-margin-top: 60px;
-} */
+.masonry-grid {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	margin-left: -1rem; /* gutter size offset */
+	width: 100%;
+}
+.masonry-column {
+	padding-left: 1rem; /* gutter size */
+	background-clip: padding-box;
+}
