@@ -7,7 +7,6 @@ import WebIcon from '@mui/icons-material/Web';
 import {
 	Box,
 	BoxProps,
-	Chip,
 	IconButton,
 	MobileStepper,
 	Typography,
