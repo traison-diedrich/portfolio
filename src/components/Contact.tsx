@@ -193,7 +193,7 @@ export const Contact: React.FC = () => {
 					Let's Get in Touch
 				</Typography>
 				<Typography
-					fontSize='clamp(.8rem, 4vw, 2rem)'
+					fontSize='clamp(.8rem, 4vw, 1.5rem)'
 					align='center'
 					color='rgba(17, 17, 17, .6)'>
 					You can connect with me via the following platforms
@@ -227,7 +227,7 @@ export const Contact: React.FC = () => {
 					<EmailButton />
 				</Box>
 				<Typography
-					fontSize='clamp(.8rem, 4vw, 2rem)'
+					fontSize='clamp(.8rem, 4vw, 1.5rem)'
 					align='center'
 					color='rgba(17, 17, 17, .6)'>
 					Or feel free to send me a message right here

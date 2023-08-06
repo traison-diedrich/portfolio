@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, WifiCalling } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, Close } from '@mui/icons-material';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -7,6 +7,7 @@ import WebIcon from '@mui/icons-material/Web';
 import {
 	Box,
 	BoxProps,
+	Chip,
 	IconButton,
 	MobileStepper,
 	Typography,
@@ -32,44 +33,68 @@ interface MyBoxProps extends BoxProps {
 interface SkillCardProps extends BoxProps {
 	title: string;
 	Icon: React.ElementType;
+	skills: string[];
+	expanded: boolean;
+	setExpanded: (expanded: boolean) => void;
 }
 
-// FIXME: hovering, not hovering and going back to hovering very quickly
-// causes the hard to increase in size over and over
-const SkillCard: React.FC<SkillCardProps> = ({ title, Icon, ...props }) => {
-	const [hovered, setHovered] = React.useState(false);
+// This card hover effect is a mess and a half,
+// don't ever do it again or at least speak to a
+// professional first lmao
+const SkillCard: React.FC<SkillCardProps> = ({
+	title,
+	Icon,
+	skills,
+	expanded,
+	setExpanded,
+	...props
+}) => {
 	const cardRef = React.useRef<HTMLElement | null>(null);
 
 	React.useEffect(() => {
-		if (cardRef.current && !hovered) {
-			const parentHeight = cardRef.current.parentElement?.clientHeight;
-			const height = 0.33 * parentHeight!;
-			cardRef.current.style.width = `${1.25 * height}px`;
-		} else if (cardRef.current) {
-			cardRef.current.style.width = '100%';
-		}
-	}, [hovered]);
+		const adjustCardWidth = () => {
+			if (cardRef.current && !expanded) {
+				const parentHeight = cardRef.current.parentElement?.clientHeight;
+				const height = 0.33 * parentHeight!;
+				const parentWidth = cardRef.current.parentElement?.clientWidth;
+				const calcWidth = 1.25 * height;
+				const width = calcWidth > parentWidth! ? parentWidth! : calcWidth;
+				cardRef.current.style.width = `${width}px`;
+			} else if (cardRef.current) {
+				cardRef.current.style.width = '100%';
+			}
+		};
+
+		adjustCardWidth(); // Initial effect
+
+		window.addEventListener('resize', adjustCardWidth); // Add resize event listener
+
+		return () => {
+			window.removeEventListener('resize', adjustCardWidth); // Clean up event listener
+		};
+	}, [expanded]);
 
 	return (
 		<Box
 			{...props}
 			ref={cardRef}
 			style={{
-				height: hovered ? '100%' : '33%',
+				height: expanded ? '100%' : '33%',
 				width: '100%',
-				maxWidth: '500px',
+				maxWidth: '600px',
 				position: 'absolute',
-				top: hovered ? 0 : '',
+				top: expanded ? 0 : '',
 				left: '50%',
 				transform: 'translateX(-50%)',
 				transition: 'all 0.9s ease',
-				zIndex: hovered ? 999 : 0,
-				paddingTop: '80px',
+				zIndex: expanded ? 2 : 1,
+				paddingTop: '4rem',
+				overflow: 'hidden',
 			}}>
 			<Box
-				onMouseEnter={() => setHovered(true)}
-				onMouseLeave={() => setHovered(false)}
+				onClick={() => setExpanded(true)}
 				sx={{
+					cursor: expanded ? '' : 'pointer',
 					width: '100%',
 					height: '100%',
 					bgcolor: 'secondary.main',
@@ -81,24 +106,13 @@ const SkillCard: React.FC<SkillCardProps> = ({ title, Icon, ...props }) => {
 				}}>
 				<Box
 					sx={{
-						position: 'absolute',
-						top: '18%',
-						left: 0,
-						width: hovered ? '100%' : 0,
-						height: '8px',
-						bgcolor: 'background.default',
-						transition: hovered ? 'width 1.4s ease-in' : '',
-					}}
-				/>
-				<Box
-					sx={{
-						width: '50%',
+						height: '25%',
 						aspectRatio: 1,
 						position: 'absolute',
-						top: hovered ? '5%' : '50%',
+						top: expanded ? '5%' : '50%',
 						left: '50%',
 						transform: 'translate(-50%, -50%)',
-						transition: 'top 0.9s ease-out',
+						transition: 'top 0.9s ease',
 						display: 'flex',
 						flexDirection: 'column',
 						justifyContent: 'center',
@@ -115,15 +129,93 @@ const SkillCard: React.FC<SkillCardProps> = ({ title, Icon, ...props }) => {
 						{title}
 					</Typography>
 				</Box>
+				<IconButton
+					sx={{
+						position: 'absolute',
+						top: '.5rem',
+						right: '.5rem',
+						opacity: expanded ? 1 : 0,
+						transition: 'opacity 0.9s ease',
+					}}
+					onClick={(event) => {
+						event.stopPropagation();
+						setExpanded(false);
+					}}>
+					<Close />
+				</IconButton>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '18%',
+						left: 0,
+						width: expanded ? '100%' : 0,
+						height: '8px',
+						bgcolor: 'background.default',
+						transition: expanded ? 'width 1.4s ease-in' : '',
+					}}
+				/>
+				<Box
+					sx={{
+						height: '80%',
+						width: '100%',
+						position: 'absolute',
+						top: expanded ? '60%' : '100%',
+						left: '50%',
+						transform: expanded
+							? 'translate(-50%, -50%)'
+							: 'translate(-50%, 0)',
+						transition: 'all 0.9s ease',
+						display: 'grid',
+						gap: '10px',
+						gridTemplateColumns: 'repeat(3, 1fr)',
+						gridTemplateRows: 'masonry',
+						p: 2,
+					}}>
+					{skills.map((skill, index) => {
+						const randomHeight = Math.floor(Math.random() * 31) + 20;
+						return (
+							<Box
+								key={index}
+								sx={{
+									display: 'grid',
+									placeItems: 'center',
+									bgcolor: 'background.default',
+									borderRadius: '1rem',
+									height: `${randomHeight}%`,
+								}}>
+								<Typography sx={{ color: 'text.primary' }}>{skill}</Typography>
+							</Box>
+						);
+					})}
+				</Box>
 			</Box>
 		</Box>
 	);
 };
 
 const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
+	const [expandedStates, setExpandedStates] = React.useState([
+		false,
+		false,
+		false,
+	]);
+
+	const anyExpanded = expandedStates.some((expanded) => expanded);
+
+	const handleExpansion = (index: number, expanded: boolean) => {
+		setExpandedStates((prevExpandedStates) => {
+			const newExpandedStates = [...prevExpandedStates];
+			newExpandedStates[index] = expanded;
+			return newExpandedStates;
+		});
+	};
+
 	const FrontendCardProps: SkillCardProps = {
 		title: 'Frontend',
 		Icon: WebIcon,
+		skills: ['React', 'Material-UI', 'HTML', 'CSS', 'JavaScript'],
+		expanded: expandedStates[0],
+		setExpanded: (expanded) => handleExpansion(0, expanded),
 		sx: {
 			top: 0,
 		},
@@ -132,6 +224,9 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 	const BackendCardProps: SkillCardProps = {
 		title: 'Backend',
 		Icon: StorageIcon,
+		skills: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB'],
+		expanded: expandedStates[1],
+		setExpanded: (expanded) => handleExpansion(1, expanded),
 		sx: {
 			top: '33%',
 		},
@@ -140,6 +235,9 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 	const OtherCardProps: SkillCardProps = {
 		title: 'Other',
 		Icon: ConstructionIcon,
+		skills: ['Python', 'Java', 'C++', 'Git', 'Docker'],
+		expanded: expandedStates[2],
+		setExpanded: (expanded) => handleExpansion(2, expanded),
 		sx: {
 			top: '66%',
 		},
@@ -154,29 +252,42 @@ const Professional: React.FC<MyBoxProps> = ({ ...props }) => {
 				width: '100%',
 				overflow: 'hidden',
 				position: 'absolute',
-				display: 'flex',
-				flexDirection: 'column',
 			}}>
-			<Box
-				sx={{
-					display: 'grid',
-					placeItems: 'center',
-					gap: '1rem',
-					width: '100%',
-				}}>
-				<Typography variant='h4' align='center' sx={{ color: 'text.primary' }}>
-					As a Developer
-				</Typography>
-			</Box>
-			<Box
-				sx={{
-					width: '100%',
-					height: '100%',
-					position: 'relative',
-				}}>
-				<SkillCard {...FrontendCardProps} />
-				<SkillCard {...BackendCardProps} />
-				<SkillCard {...OtherCardProps} />
+			<Box sx={{ height: '100%', width: '100%', position: 'relative' }}>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: 0,
+						display: 'grid',
+						placeItems: 'center',
+						gap: '.5rem',
+						width: '100%',
+						opacity: anyExpanded ? 0 : 1,
+						transition: 'opacity 0.9s ease',
+					}}>
+					<Typography
+						variant='h4'
+						align='center'
+						sx={{ color: 'text.primary' }}>
+						As a Developer
+					</Typography>
+					<Typography
+						variant='subtitle1'
+						align='center'
+						sx={{ color: 'text.secondary' }}>
+						My skills and experience
+					</Typography>
+				</Box>
+				<Box
+					sx={{
+						width: '100%',
+						height: '100%',
+						position: 'relative',
+					}}>
+					<SkillCard {...FrontendCardProps} />
+					<SkillCard {...BackendCardProps} />
+					<SkillCard {...OtherCardProps} />
+				</Box>
 			</Box>
 		</Box>
 	);
@@ -217,9 +328,10 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
 						: `translateX(-${curr * 100}%)`,
 					transition: 'transform 1s ease',
 				}}>
-				{mappedImages.map((image) => (
+				{mappedImages.map((image, index) => (
 					<Box
 						component='img'
+						key={index}
 						src={image}
 						sx={{
 							width: '100%',
@@ -390,7 +502,7 @@ const Personal: React.FC<MyBoxProps> = ({ sliderPosition, ...props }) => {
 				height: '100%',
 				width: '100%',
 				position: 'absolute',
-				zIndex: 2,
+				zIndex: 3,
 				right: `${100 - (sliderPosition || 0)}%`,
 				transition: 'right 0.9s ease',
 			}}>
