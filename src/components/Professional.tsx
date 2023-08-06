@@ -149,7 +149,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
 						transition: 'all 0.9s ease',
 						display: 'flex',
 						justifyContent: 'center',
-						p: 4,
+						p: breakpoint === 'mobile' ? 1 : 4,
 					}}>
 					<Masonry
 						breakpointCols={breakpoint === 'mobile' ? 2 : 3}
@@ -158,8 +158,8 @@ const SkillCard: React.FC<SkillCardProps> = ({
 						{skills.map((skill, index) => {
 							const randomHeight =
 								breakpoint === 'mobile'
-									? Math.floor(Math.random() * 3) + 3
-									: Math.floor(Math.random() * 4) + 4;
+									? Math.floor(Math.random() * 2) + 2
+									: Math.floor(Math.random() * 4) + 3;
 							return (
 								<Box
 									key={index}
@@ -168,9 +168,9 @@ const SkillCard: React.FC<SkillCardProps> = ({
 										placeItems: 'center',
 										bgcolor: 'background.default',
 										borderRadius: '1rem',
-										height: `${randomHeight}rem`,
 										mb: '1rem',
-										p: 1,
+										px: 1,
+										py: randomHeight,
 									}}>
 									<Typography align='center' sx={{ color: 'text.primary' }}>
 										{skill}

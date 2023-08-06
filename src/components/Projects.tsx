@@ -127,9 +127,14 @@ const ProjectCard: React.FC<CardProps> = (props) => {
 					<Box
 						display='flex'
 						sx={{ flexDirection: mobile ? 'column' : 'row', gap: '.5rem' }}>
-						<Typography fontSize='clamp(1rem, 8vw, 2rem)' color='primary'>
-							{props.title}
-						</Typography>
+						<a
+							href={props.url}
+							target='_blank'
+							style={{ textDecoration: 'none' }}>
+							<Typography fontSize='clamp(1rem, 8vw, 2rem)' color='primary'>
+								{props.title}
+							</Typography>
+						</a>
 						<Box
 							sx={{
 								display: 'flex',
