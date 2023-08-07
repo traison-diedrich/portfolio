@@ -258,6 +258,7 @@ export const Professional: React.FC<BoxProps> = ({ ...props }) => {
 			'C/C++',
 			'R',
 			'CI/CD',
+			'OpenCV',
 		],
 		expanded: expandedStates[2],
 		setExpanded: (expanded) => handleExpansion(2, expanded),
