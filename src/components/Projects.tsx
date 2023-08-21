@@ -190,10 +190,10 @@ export const Projects: React.FC = () => {
 						title='Workout Planner'
 						url='https://workout-planner.fit'
 						image={images.workoutPlanner}
-						subtitle='My first application, using React and Supabase to
-						create a workout planner with user authentication'
+						subtitle='My first application, using DaisyUI, Typescript, React, Supabase, and PostgreSQL 
+						to create a workout planner with user authentication'
 						icons={[
-							'MaterialUIIcon',
+							'TailwindCSSIcon',
 							'TypeScriptIcon',
 							'ReactIcon',
 							'PostgreSQLIcon',
