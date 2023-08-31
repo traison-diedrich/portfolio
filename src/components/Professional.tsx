@@ -325,11 +325,12 @@ export const Professional: React.FC<BoxProps> = ({ ...props }) => {
 				</Box>
 				<Box
 					component='a'
-					href='/Resume.pdf'
+					href='//traison-diedrich.github.io/resume/'
 					target='_blank'
 					sx={{
 						position: 'absolute',
 						width: '100%',
+						maxWidth: '600px',
 						bottom: '0',
 						display: 'grid',
 						placeItems: 'center',

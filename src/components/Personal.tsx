@@ -48,6 +48,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
 				{mappedImages.map((image, index) => (
 					<Box
 						component='img'
+						loading='lazy'
 						key={index}
 						src={image}
 						sx={{
