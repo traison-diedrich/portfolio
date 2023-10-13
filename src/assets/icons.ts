@@ -9,6 +9,9 @@ import { RaspberryPiIcon } from './icons/RaspberryPiIcon';
 import { ReactIcon } from './icons/ReactIcon';
 import { TailwindCSSIcon } from './icons/TailwindCSSIcon';
 import { TypeScriptIcon } from './icons/TypeScriptIcon';
+import { FastAPIIcon } from './icons/FastAPIIcon';
+import { LinodeIcon } from './icons/LinodeIcon';
+import { SupabaseIcon } from './icons/SupabaseIcon';
 
 const icons = {
 	BootstrapIcon,
@@ -21,6 +24,9 @@ const icons = {
 	RaspberryPiIcon,
 	ReactIcon,
 	TypeScriptIcon,
+	FastAPIIcon,
+	LinodeIcon,
+	SupabaseIcon
 };
 
 export default icons;

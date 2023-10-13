@@ -196,6 +196,20 @@ export const Projects: React.FC = () => {
 							'TailwindCSSIcon',
 							'TypeScriptIcon',
 							'ReactIcon',
+						]}
+					/>
+				</Grid>
+				<Grid item>
+					<ProjectCard
+						title='WPI'
+						url='https://api.workout-planner.fit/docs'
+						image={images.wpi}
+						subtitle='A self-hosted, RESTful API handling client-side requests for Workout Planner, 
+						simultaneously making the Workout Planner data publically available'
+						icons={[
+							'FastAPIIcon',
+							'LinodeIcon',
+							'SupabaseIcon',
 							'PostgreSQLIcon',
 						]}
 					/>

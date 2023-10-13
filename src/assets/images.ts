@@ -14,6 +14,7 @@ import nature2 from './images/nature2.jpg';
 import profilePic from './images/profCutout.png';
 import rpi from './images/rpi.jpg';
 import workoutPlanner from './images/workoutPlanner.jpg';
+import wpi from './images/wpi.jpg';
 
 const images = {
 	battleBros,
@@ -21,6 +22,7 @@ const images = {
 	hybridImages,
 	rpi,
 	workoutPlanner,
+	wpi,
 	profilePic,
 	bodybuilding1,
 	bodybuilding2,
