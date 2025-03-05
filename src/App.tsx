@@ -2,12 +2,6 @@ import { Box, Container, CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { BreakpointProvider } from './BreakpointProvider';
-import { About } from './components/About';
-import { AppFooter } from './components/AppFooter';
-import { AppHeader } from './components/AppHeader';
-import { Contact } from './components/Contact';
-import { Intro } from './components/Intro';
-import { Projects } from './components/Projects';
 
 const theme = createTheme({
 	palette: {
