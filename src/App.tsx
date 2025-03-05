@@ -43,19 +43,22 @@ function App() {
 						<Container
 							maxWidth={false}
 							disableGutters
-							sx={{ bgcolor: 'background.default' }}>
-							<AppHeader />
+							sx={{ bgcolor: 'background.default',
+									width: '100vw',
+									height: '100vh',
+							}}>
 							<Box
 								sx={{
+									width: '100%',
+									height: '100%',
 									display: 'flex',
 									flexDirection: 'column',
 									alignItems: 'center',
+									justifyContent: 'center',
+									textAlign: 'center',
+									padding: '10%',
 								}}>
-								<Intro />
-								<About />
-								<Projects />
-								<Contact />
-								<AppFooter />
+								<p className='text subtitle'> The 'non-free will' is mythology; in real life, it is only a question of strong and weak wills</p>
 							</Box>
 						</Container>
 					</BreakpointProvider>
